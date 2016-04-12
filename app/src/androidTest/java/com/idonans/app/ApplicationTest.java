@@ -1,4 +1,4 @@
-package com.idonans.acommon;
+package com.idonans.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
