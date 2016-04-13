@@ -2,6 +2,7 @@ package com.idonans.acommon.data;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.idonans.acommon.AppContext;
 
@@ -25,6 +26,8 @@ public class ProcessManager {
 
     private int mProcessId;
     private String mProcessName;
+    private String mProcessTag;
+    private static final String PROCESS_TAG_MAIN = "main";
 
     private ProcessManager() {
         mProcessId = android.os.Process.myPid();
@@ -37,14 +40,46 @@ public class ProcessManager {
             }
         }
 
+        String processName = mProcessName;
+        int index = processName.lastIndexOf(':');
+        String processSuffix = null;
+        if (index >= 0) {
+            if (index == 0 || index == processName.length() - 1) {
+                throw new IllegalArgumentException("invalid process name " + processName);
+            }
+            processSuffix = processName.substring(index + 1);
+        }
+
+        if (TextUtils.isEmpty(processSuffix)) {
+            mProcessTag = PROCESS_TAG_MAIN;
+        } else {
+            mProcessTag = "sub_" + processSuffix;
+        }
     }
 
     public int getProcessId() {
         return mProcessId;
     }
 
+    /**
+     * 获取当前进程名称
+     */
     public String getProcessName() {
         return mProcessName;
+    }
+
+    /**
+     * 获取当前进程的标识，可以用于文件名
+     */
+    public String getProcessTag() {
+        return mProcessTag;
+    }
+
+    /**
+     * 判断当前进程是否为主进程， 主进程的进程名等于包名
+     */
+    public boolean isMainProcess() {
+        return PROCESS_TAG_MAIN.equals(mProcessTag);
     }
 
 }
