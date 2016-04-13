@@ -3,6 +3,7 @@ package com.idonans.acommon.app;
 import android.support.v4.app.Fragment;
 
 /**
+ * 基类 Fragment
  * Created by idonans on 16-4-13.
  */
 public class CommonFragment extends Fragment {
