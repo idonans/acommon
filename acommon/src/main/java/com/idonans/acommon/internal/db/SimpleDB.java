@@ -111,7 +111,7 @@ public class SimpleDB {
     }
 
     /**
-     * 删除多余的旧数据(按时间倒序)，保留指定条数的数据
+     * 删除多余的旧数据(按时间倒序)，保留指定条数的数据. 返回删除的数据的条数，如果不满足删除条件返回 -1.
      */
     public int trim(int maxRows) {
         if (maxRows < 1) {

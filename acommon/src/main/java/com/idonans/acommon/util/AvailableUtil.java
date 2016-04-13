@@ -6,7 +6,7 @@ import com.idonans.acommon.lang.NotAvailableException;
 /**
  * Created by idonans on 16-4-13.
  * <p/>
- * 如果需要使用一个可用的Available，可以使用AvailableUtil.always();
+ * 如果需要使用一个可用的 Available ，可以使用 AvailableUtil.always();
  */
 public class AvailableUtil {
 

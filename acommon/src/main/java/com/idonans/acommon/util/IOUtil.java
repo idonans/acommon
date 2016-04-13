@@ -33,7 +33,7 @@ public final class IOUtil {
     }
 
     /**
-     * SQLiteDatabase不需要关闭
+     * SQLiteDatabase 不需要关闭
      */
     @Deprecated
     public static void closeQuietly(SQLiteClosable closeable) {
@@ -204,7 +204,7 @@ public final class IOUtil {
 
     /**
      * 读取所有的行并返回，注意返回的行内容不包括换行符号 '\n', '\r', "\r\n" <br/>
-     * 每读取一行，进度append 1.
+     * 每读取一行，进度 append 1.
      */
     public static List<String> readAllLines(InputStream is, Available available, Progress progress) throws Exception {
         List<String> allLines = new ArrayList<>();
