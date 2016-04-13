@@ -1,13 +1,14 @@
 package com.idonans.app;
 
+import android.content.ContextWrapper;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.idonans.acommon.app.CommonActivity;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.util.DimenUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends CommonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         builder.append("Process is main:").append(ProcessManager.getInstance().isMainProcess()).append("\n");
         builder.append("dp2px 0.2dp->").append(DimenUtil.dp2px(0.2f)).append("\n");
         builder.append("sp2px 0.2sp->").append(DimenUtil.sp2px(0.2f)).append("\n");
+        builder.append("text context info:").append(text.getContext().getClass()).append("\n");
+        builder.append("text context base info:").append(((ContextWrapper) text.getContext()).getBaseContext().getClass()).append("\n");
         text.setText(builder);
     }
 
