@@ -1,6 +1,7 @@
 package com.idonans.acommon;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 /**
  * 在程序启动式设置 Context, 通常在 Application#onCreate, ContentProvider#onCreate
@@ -10,6 +11,7 @@ public class AppContext {
 
     private static Context sContext;
 
+    @NonNull
     public static Context getContext() {
         return sContext;
     }
