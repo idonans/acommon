@@ -9,6 +9,7 @@ import com.idonans.acommon.app.CommonActivity;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
 import com.idonans.acommon.util.DimenUtil;
+import com.idonans.acommon.util.MD5Util;
 import com.idonans.acommon.util.SystemUtil;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +35,9 @@ public class MainActivity extends CommonActivity {
         builder.append("app last run time:").append(getAppLastRunTime()).append("\n");
         builder.append("app id:").append(SystemUtil.getAppID()).append("\n");
         builder.append("max heap size:").append(SystemUtil.getMaxHeapSize()).append("\n");
+        builder.append("md5 null string:").append(MD5Util.md5(null)).append("\n");
+        builder.append("md5 empty string:").append(MD5Util.md5("")).append("\n");
+        builder.append("md5 string 123:").append(MD5Util.md5("123")).append("\n");
         text.setText(builder);
 
         View printDBContent = findViewById(R.id.print_db_content);
