@@ -184,6 +184,9 @@ public class SimpleDB {
         try {
             SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
             String dbName = this.mOpenHelper.getDatabaseName();
+            String dbPath = db.getPath();
+            String tag = "SimpleDB " + dbPath + "[" + dbName + "]";
+            CommonLog.d("--" + tag + "--");
             cursor = db.query(TABLE_NAME, new String[]{COLUMN_KEY, COLUMN_VALUE, COLUMN_UPDATE}, null, null, null, null, COLUMN_UPDATE + " desc");
             String key;
             String value;
@@ -194,6 +197,7 @@ public class SimpleDB {
                 update = cursor.getLong(2);
                 CommonLog.d(dbName + " " + update + ", " + key + ", " + value);
             }
+            CommonLog.d("--" + tag + "-- end");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

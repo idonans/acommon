@@ -68,5 +68,19 @@ public class StorageManager {
         return value;
     }
 
+    /**
+     * 打印所有 Cache 内容， 协助调试使用
+     */
+    public void printCacheContent() {
+        mDBCache.printAllRows();
+    }
+
+    /**
+     * 打印所有 Setting 内容， 协助调试使用
+     */
+    public void printSettingContent() {
+        mDBSetting.printAllRows();
+    }
+
 }
 

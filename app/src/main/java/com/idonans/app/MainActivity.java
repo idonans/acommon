@@ -3,6 +3,7 @@ package com.idonans.app;
 import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.idonans.acommon.app.CommonActivity;
@@ -34,6 +35,15 @@ public class MainActivity extends CommonActivity {
         builder.append("app first run time:").append(getAppFirstRunTime()).append("\n");
         builder.append("app last run time:").append(getAppLastRunTime()).append("\n");
         text.setText(builder);
+
+        View printDBContent = findViewById(R.id.print_db_content);
+        printDBContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StorageManager.getInstance().printCacheContent();
+                StorageManager.getInstance().printSettingContent();
+            }
+        });
     }
 
     private String getAppFirstRunTime() {
