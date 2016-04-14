@@ -33,6 +33,7 @@ public class MainActivity extends CommonActivity {
         builder.append("app first run time:").append(getAppFirstRunTime()).append("\n");
         builder.append("app last run time:").append(getAppLastRunTime()).append("\n");
         builder.append("app id:").append(SystemUtil.getAppID()).append("\n");
+        builder.append("max heap size:").append(SystemUtil.getMaxHeapSize()).append("\n");
         text.setText(builder);
 
         View printDBContent = findViewById(R.id.print_db_content);

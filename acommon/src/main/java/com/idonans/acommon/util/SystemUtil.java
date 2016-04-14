@@ -1,5 +1,7 @@
 package com.idonans.acommon.util;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -50,6 +52,16 @@ public class SystemUtil {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * 获取当前进程允许的最大 heap size(字节数). 仅 Java 部分的内容受此系统设置限制， native 层的内容消耗受手机内存容量限制。
+     * 容量超过此值会出现 OOM 错误。
+     * 如 手机 CHM-UL00 的 heap size 是 268435456 byte (256M), 该手机的配置是 2G 内存，16G 存储空间， 1280x720 分辨率, Android 4.4.2 系统
+     */
+    public static long getMaxHeapSize() {
+        ActivityManager am = (ActivityManager) AppContext.getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        return am.getMemoryClass() * 1024L * 1024L;
     }
 
 }
