@@ -1,11 +1,13 @@
 package com.idonans.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.idonans.acommon.app.CommonActivity;
+import com.idonans.acommon.app.CommonService;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
 import com.idonans.acommon.util.DimenUtil;
@@ -64,6 +66,8 @@ public class MainActivity extends CommonActivity {
                 SystemUtil.openView("https://www.baidu.com");
             }
         });
+
+        startService(new Intent(this, CommonService.class));
     }
 
     private String getAppFirstRunTime() {
