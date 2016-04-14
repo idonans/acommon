@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.idonans.acommon.app.CommonActivity;
+import com.idonans.acommon.data.AppIDManager;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
 import com.idonans.acommon.util.DimenUtil;
@@ -34,6 +35,7 @@ public class MainActivity extends CommonActivity {
         builder.append("text context base info:").append(((ContextWrapper) text.getContext()).getBaseContext().getClass()).append("\n");
         builder.append("app first run time:").append(getAppFirstRunTime()).append("\n");
         builder.append("app last run time:").append(getAppLastRunTime()).append("\n");
+        builder.append("app id:").append(AppIDManager.getInstance().getAppID()).append("\n");
         text.setText(builder);
 
         View printDBContent = findViewById(R.id.print_db_content);
