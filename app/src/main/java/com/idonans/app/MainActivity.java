@@ -1,16 +1,15 @@
 package com.idonans.app;
 
-import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.idonans.acommon.app.CommonActivity;
-import com.idonans.acommon.data.AppIDManager;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
 import com.idonans.acommon.util.DimenUtil;
+import com.idonans.acommon.util.SystemUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,11 +30,9 @@ public class MainActivity extends CommonActivity {
         builder.append("Process is main:").append(ProcessManager.getInstance().isMainProcess()).append("\n");
         builder.append("dp2px 0.2dp->").append(DimenUtil.dp2px(0.2f)).append("\n");
         builder.append("sp2px 0.2sp->").append(DimenUtil.sp2px(0.2f)).append("\n");
-        builder.append("text context info:").append(text.getContext().getClass()).append("\n");
-        builder.append("text context base info:").append(((ContextWrapper) text.getContext()).getBaseContext().getClass()).append("\n");
         builder.append("app first run time:").append(getAppFirstRunTime()).append("\n");
         builder.append("app last run time:").append(getAppLastRunTime()).append("\n");
-        builder.append("app id:").append(AppIDManager.getInstance().getAppID()).append("\n");
+        builder.append("app id:").append(SystemUtil.getAppID()).append("\n");
         text.setText(builder);
 
         View printDBContent = findViewById(R.id.print_db_content);
@@ -44,6 +41,22 @@ public class MainActivity extends CommonActivity {
             public void onClick(View v) {
                 StorageManager.getInstance().printCacheContent();
                 StorageManager.getInstance().printSettingContent();
+            }
+        });
+
+        View downloadZcoolApp = findViewById(R.id.view_market_zcool);
+        downloadZcoolApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemUtil.openMarket("com.zcool.community");
+            }
+        });
+
+        View openBaiduUrl = findViewById(R.id.view_browser_baidu);
+        openBaiduUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemUtil.openView("https://www.baidu.com");
             }
         });
     }

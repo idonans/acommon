@@ -25,5 +25,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="打印数据库内容"/>
+        <Button
+            android:id="@+id/view_market_zcool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="下载站酷 App"/>
+        <Button
+            android:id="@+id/view_browser_baidu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="打开百度"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
