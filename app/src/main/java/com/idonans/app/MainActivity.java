@@ -10,6 +10,8 @@ import com.idonans.acommon.app.CommonActivity;
 import com.idonans.acommon.app.CommonService;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
+import com.idonans.acommon.util.AssetUtil;
+import com.idonans.acommon.util.AvailableUtil;
 import com.idonans.acommon.util.DimenUtil;
 import com.idonans.acommon.util.HumanUtil;
 import com.idonans.acommon.util.MD5Util;
@@ -45,6 +47,7 @@ public class MainActivity extends CommonActivity {
         builder.append("human size 9803 byte:").append(HumanUtil.getHumanSizeFromByte(9803)).append("\n");
         builder.append("human size -9803 byte:").append(HumanUtil.getHumanSizeFromByte(-9803)).append("\n");
         builder.append("phone number regex 13010101011:").append(RegexUtil.isPhoneNumber("13010101011")).append("\n");
+        builder.append("read assets:").append(readAsset()).append("\n");
         text.setText(builder);
 
         View printDBContent = findViewById(R.id.print_db_content);
@@ -73,6 +76,16 @@ public class MainActivity extends CommonActivity {
         });
 
         startService(new Intent(this, CommonService.class));
+    }
+
+    private String readAsset() {
+        try {
+            String json = AssetUtil.readAllAsString("acommon/info.json", AvailableUtil.always(), null);
+            return json;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "read fail";
     }
 
     private String getAppFirstRunTime() {
