@@ -46,4 +46,11 @@ public class ThreadPool {
         });
     }
 
+    /**
+     * 获得线程池中正在运行的任务数量 (任务数量可能比当前线程池中的线程数量少)
+     */
+    public int getCount() {
+        return mCount.get();
+    }
+
 }
