@@ -10,10 +10,10 @@ import java.lang.ref.WeakReference;
  */
 public class WeakAvailable implements Available {
 
-    private WeakReference mWeakReference = new WeakReference(null);
+    private WeakReference<Object> mWeakReference = new WeakReference<>(null);
 
     public WeakAvailable(Object object) {
-        mWeakReference = new WeakReference(object);
+        mWeakReference = new WeakReference<>(object);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class WeakAvailable implements Available {
     }
 
     public void setObject(Object object) {
-        mWeakReference = new WeakReference(object);
+        mWeakReference = new WeakReference<>(object);
     }
 
     public Object getObject() {
