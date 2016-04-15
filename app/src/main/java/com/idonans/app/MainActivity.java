@@ -11,7 +11,9 @@ import com.idonans.acommon.app.CommonService;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
 import com.idonans.acommon.util.DimenUtil;
+import com.idonans.acommon.util.HumanUtil;
 import com.idonans.acommon.util.MD5Util;
+import com.idonans.acommon.util.RegexUtil;
 import com.idonans.acommon.util.SystemUtil;
 
 import java.text.SimpleDateFormat;
@@ -40,6 +42,9 @@ public class MainActivity extends CommonActivity {
         builder.append("md5 null string:").append(MD5Util.md5(null)).append("\n");
         builder.append("md5 empty string:").append(MD5Util.md5("")).append("\n");
         builder.append("md5 string 123:").append(MD5Util.md5("123")).append("\n");
+        builder.append("human size 9803 byte:").append(HumanUtil.getHumanSizeFromByte(9803)).append("\n");
+        builder.append("human size -9803 byte:").append(HumanUtil.getHumanSizeFromByte(-9803)).append("\n");
+        builder.append("phone number regex 13010101011:").append(RegexUtil.isPhoneNumber("13010101011")).append("\n");
         text.setText(builder);
 
         View printDBContent = findViewById(R.id.print_db_content);
