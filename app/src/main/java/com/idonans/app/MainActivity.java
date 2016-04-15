@@ -2,6 +2,7 @@ package com.idonans.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.idonans.acommon.data.StorageManager;
 import com.idonans.acommon.util.AssetUtil;
 import com.idonans.acommon.util.AvailableUtil;
 import com.idonans.acommon.util.DimenUtil;
+import com.idonans.acommon.util.FileUtil;
 import com.idonans.acommon.util.HumanUtil;
 import com.idonans.acommon.util.MD5Util;
 import com.idonans.acommon.util.RegexUtil;
@@ -48,6 +50,15 @@ public class MainActivity extends CommonActivity {
         builder.append("human size -9803 byte:").append(HumanUtil.getHumanSizeFromByte(-9803)).append("\n");
         builder.append("phone number regex 13010101011:").append(RegexUtil.isPhoneNumber("13010101011")).append("\n");
         builder.append("read assets:").append(readAsset()).append("\n");
+        builder.append("get filename from url:").append(FileUtil.getFilenameFromUrl("http://test.com/a.jpg")).append("\n");
+        builder.append("get file extension from url:").append(FileUtil.getFileExtensionFromUrl("http://test.com/a.jpg")).append("\n");
+        builder.append("private cache dir:").append(FileUtil.getCacheDir()).append("\n");
+        builder.append("public DCIM dir:").append(FileUtil.getPublicDCIMDir()).append("\n");
+        builder.append("public picture dir:").append(FileUtil.getPublicPictureDir()).append("\n");
+        builder.append("public download dir:").append(FileUtil.getPublicDownloadDir()).append("\n");
+        builder.append("public music dir:").append(FileUtil.getPublicMusicDir()).append("\n");
+        builder.append("public movie dir:").append(FileUtil.getPublicMovieDir()).append("\n");
+        builder.append("public dir alarms:").append(FileUtil.getPublicDir(Environment.DIRECTORY_ALARMS)).append("\n");
         text.setText(builder);
 
         View printDBContent = findViewById(R.id.print_db_content);
