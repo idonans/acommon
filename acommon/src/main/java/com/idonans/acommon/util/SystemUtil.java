@@ -76,7 +76,7 @@ public class SystemUtil {
         View contentView = activity.findViewById(Window.ID_ANDROID_CONTENT);
         Rect frame = new Rect();
         contentView.getWindowVisibleDisplayFrame(frame);
-        return contentView.getBottom() - frame.bottom > softKeyboardHeight;
+        return contentView.getRootView().getBottom() - frame.bottom > softKeyboardHeight;
     }
 
 }
