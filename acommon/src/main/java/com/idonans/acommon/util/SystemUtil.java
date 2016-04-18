@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.view.View;
 import android.view.Window;
@@ -74,9 +73,8 @@ public class SystemUtil {
     public static boolean isSoftKeyboardShown(Activity activity) {
         int softKeyboardHeight = DimenUtil.dp2px(100);
         View contentView = activity.findViewById(Window.ID_ANDROID_CONTENT);
-        Rect frame = new Rect();
-        contentView.getWindowVisibleDisplayFrame(frame);
-        return contentView.getRootView().getBottom() - frame.bottom > softKeyboardHeight;
+        View rootView = contentView.getRootView();
+        return rootView.getBottom() - contentView.getBottom() > softKeyboardHeight;
     }
 
 }
