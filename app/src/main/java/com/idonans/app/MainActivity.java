@@ -52,6 +52,7 @@ public class MainActivity extends CommonActivity {
         builder.append("read assets:").append(readAsset()).append("\n");
         builder.append("get filename from url:").append(FileUtil.getFilenameFromUrl("http://test.com/a.jpg")).append("\n");
         builder.append("get file extension from url:").append(FileUtil.getFileExtensionFromUrl("http://test.com/a.jpg")).append("\n");
+        builder.append("get file extension from url(/sdcard/0/1.jpg):").append(FileUtil.getFileExtensionFromUrl("/sdcard/0/1.jpg")).append("\n");
         builder.append("private cache dir:").append(FileUtil.getCacheDir()).append("\n");
         builder.append("public DCIM dir:").append(FileUtil.getPublicDCIMDir()).append("\n");
         builder.append("public picture dir:").append(FileUtil.getPublicPictureDir()).append("\n");
