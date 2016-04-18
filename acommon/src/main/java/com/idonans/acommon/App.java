@@ -14,9 +14,17 @@ import com.idonans.acommon.lang.CommonLog;
  */
 public class App {
 
+    private static boolean sInitCalled;
     private static BuildConfigAdapter sBuildConfigAdapter;
 
     public static void init(Context context, BuildConfigAdapter buildConfigAdapter) {
+        synchronized (App.class) {
+            if (sInitCalled) {
+                return;
+            }
+            sInitCalled = true;
+        }
+
         AppContext.setContext(context);
         sBuildConfigAdapter = buildConfigAdapter;
 
