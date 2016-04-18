@@ -12,7 +12,6 @@ import android.view.Window;
 
 import com.idonans.acommon.AppContext;
 import com.idonans.acommon.data.AppIDManager;
-import com.idonans.acommon.lang.CommonLog;
 
 import java.util.List;
 
@@ -75,12 +74,9 @@ public class SystemUtil {
     public static boolean isSoftKeyboardShown(Activity activity) {
         int softKeyboardHeight = DimenUtil.dp2px(100);
         View contentView = activity.findViewById(Window.ID_ANDROID_CONTENT);
-        Rect r = new Rect();
-        contentView.getWindowVisibleDisplayFrame(r);
-
-        CommonLog.d("content view bottom:" + contentView.getBottom() + ", content view visible display frame:" + r + ", softKeyboardHeight:" + softKeyboardHeight);
-
-        return contentView.getBottom() - r.bottom > softKeyboardHeight;
+        Rect frame = new Rect();
+        contentView.getWindowVisibleDisplayFrame(frame);
+        return contentView.getBottom() - frame.bottom > softKeyboardHeight;
     }
 
 }
