@@ -19,6 +19,7 @@ import com.idonans.acommon.util.HumanUtil;
 import com.idonans.acommon.util.MD5Util;
 import com.idonans.acommon.util.RegexUtil;
 import com.idonans.acommon.util.SystemUtil;
+import com.idonans.acommon.util.ViewUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class MainActivity extends CommonActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView text = (TextView) findViewById(R.id.text);
+        TextView text = ViewUtil.findViewByID(this, R.id.text);
 
         StringBuilder builder = new StringBuilder();
         builder.append("Process id:").append(ProcessManager.getInstance().getProcessId()).append("\n");
@@ -62,7 +63,7 @@ public class MainActivity extends CommonActivity {
         builder.append("public dir alarms:").append(FileUtil.getPublicDir(Environment.DIRECTORY_ALARMS)).append("\n");
         text.setText(builder);
 
-        View printDBContent = findViewById(R.id.print_db_content);
+        View printDBContent = ViewUtil.findViewByID(this, R.id.print_db_content);
         printDBContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +72,7 @@ public class MainActivity extends CommonActivity {
             }
         });
 
-        View downloadZcoolApp = findViewById(R.id.view_market_zcool);
+        View downloadZcoolApp = ViewUtil.findViewByID(this, R.id.view_market_zcool);
         downloadZcoolApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +80,7 @@ public class MainActivity extends CommonActivity {
             }
         });
 
-        View openBaiduUrl = findViewById(R.id.view_browser_baidu);
+        View openBaiduUrl = ViewUtil.findViewByID(this, R.id.view_browser_baidu);
         openBaiduUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
