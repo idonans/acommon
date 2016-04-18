@@ -1,14 +1,39 @@
 package com.idonans.acommon.app;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.idonans.acommon.lang.Available;
+import com.idonans.acommon.lang.CommonLog;
 
 /**
  * 基类 Activity
  * Created by idonans on 16-4-13.
  */
-public class CommonActivity extends AppCompatActivity {
+public class CommonActivity extends AppCompatActivity implements Available {
 
+    private boolean mAvailable;
     private boolean mPaused;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        {
+            // 修复根Activity重复启动的bug
+            if (!isTaskRoot()) {
+                Intent intent = getIntent();
+                if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(intent.getAction())) {
+                    CommonLog.d("close this launcher instance " + getClass().getName() + "@" + hashCode());
+                    finish();
+                    return;
+                }
+            }
+        }
+
+        mAvailable = true;
+    }
 
     @Override
     protected void onPause() {
@@ -31,6 +56,17 @@ public class CommonActivity extends AppCompatActivity {
         if (!isPaused()) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAvailable = false;
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return mAvailable && !isFinishing();
     }
 
 }
