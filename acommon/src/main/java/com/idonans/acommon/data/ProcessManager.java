@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.idonans.acommon.AppContext;
+import com.idonans.acommon.lang.CommonLog;
 
 import java.util.List;
 
@@ -55,6 +56,8 @@ public class ProcessManager {
         } else {
             mProcessTag = "sub_" + processSuffix;
         }
+
+        CommonLog.d("process tag:" + mProcessTag + ", id:" + mProcessId + ", name:" + mProcessName);
     }
 
     public int getProcessId() {

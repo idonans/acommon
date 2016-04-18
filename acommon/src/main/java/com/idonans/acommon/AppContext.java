@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 /**
- * 在程序启动式设置 Context, 通常在 Application#onCreate, ContentProvider#onCreate
+ * 设置 Context
  * Created by idonans on 16-4-12.
  */
 public class AppContext {

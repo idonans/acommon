@@ -2,6 +2,8 @@ package com.idonans.acommon.data;
 
 import android.text.TextUtils;
 
+import com.idonans.acommon.lang.CommonLog;
+
 import java.util.UUID;
 
 /**
@@ -31,6 +33,8 @@ public class AppIDManager {
             mAppID = UUID.randomUUID().toString();
             StorageManager.getInstance().setSetting(KEY_APP_ID, mAppID);
         }
+
+        CommonLog.d("App ID:" + mAppID);
     }
 
     public String getAppID() {
