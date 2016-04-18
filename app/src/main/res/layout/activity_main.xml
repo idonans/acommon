@@ -57,5 +57,8 @@
                 android:text="检查软键盘状态"/>
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="400dp"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

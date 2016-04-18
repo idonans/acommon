@@ -69,7 +69,7 @@ public class SystemUtil {
     }
 
     /**
-     * 判断当前软键盘是否处于打开状态
+     * 判断当前软键盘是否处于打开状态 (非全屏并且 windowSoftInputMode 为 adjustResize 时有效)
      */
     public static boolean isSoftKeyboardShown(Activity activity) {
         int softKeyboardHeight = DimenUtil.dp2px(100);
