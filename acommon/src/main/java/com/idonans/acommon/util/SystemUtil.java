@@ -1,13 +1,18 @@
 package com.idonans.acommon.util;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.graphics.Rect;
 import android.net.Uri;
+import android.view.View;
+import android.view.Window;
 
 import com.idonans.acommon.AppContext;
 import com.idonans.acommon.data.AppIDManager;
+import com.idonans.acommon.lang.CommonLog;
 
 import java.util.List;
 
@@ -62,6 +67,20 @@ public class SystemUtil {
     public static long getMaxHeapSize() {
         ActivityManager am = (ActivityManager) AppContext.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         return am.getMemoryClass() * 1024L * 1024L;
+    }
+
+    /**
+     * 判断当前软键盘是否处于打开状态
+     */
+    public static boolean isSoftKeyboardShown(Activity activity) {
+        int softKeyboardHeight = DimenUtil.dp2px(100);
+        View contentView = activity.findViewById(Window.ID_ANDROID_CONTENT);
+        Rect r = new Rect();
+        contentView.getWindowVisibleDisplayFrame(r);
+
+        CommonLog.d("content view bottom:" + contentView.getBottom() + ", content view visible display frame:" + r + ", softKeyboardHeight:" + softKeyboardHeight);
+
+        return contentView.getBottom() - r.bottom > softKeyboardHeight;
     }
 
 }

@@ -25,15 +25,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="打印数据库内容"/>
+
         <Button
             android:id="@+id/view_market_zcool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="下载站酷 App"/>
+
         <Button
             android:id="@+id/view_browser_baidu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="打开百度"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/softKeyboardStatus"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"/>
+
+            <Button
+                android:id="@+id/checkSoftKeyboardStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="检查软键盘状态"/>
+        </LinearLayout>
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -89,6 +89,22 @@ public class MainActivity extends CommonActivity {
         });
 
         startService(new Intent(this, CommonService.class));
+
+        final TextView showSoftKeyboardStatus = ViewUtil.findViewByID(this, R.id.softKeyboardStatus);
+        View checkSoftKeyboardStatus = ViewUtil.findViewByID(this, R.id.checkSoftKeyboardStatus);
+        checkSoftKeyboardStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean softKeyboardShown = SystemUtil.isSoftKeyboardShown(MainActivity.this);
+                String softKeyboardStatus;
+                if (softKeyboardShown) {
+                    softKeyboardStatus = "软键盘打开";
+                } else {
+                    softKeyboardStatus = "软键盘关闭";
+                }
+                showSoftKeyboardStatus.setText(softKeyboardStatus);
+            }
+        });
     }
 
     private String readAsset() {
