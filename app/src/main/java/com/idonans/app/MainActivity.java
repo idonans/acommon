@@ -11,6 +11,7 @@ import com.idonans.acommon.app.CommonActivity;
 import com.idonans.acommon.app.CommonService;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
+import com.idonans.acommon.lang.SoftKeyboardObserver;
 import com.idonans.acommon.util.AssetUtil;
 import com.idonans.acommon.util.AvailableUtil;
 import com.idonans.acommon.util.DimenUtil;
@@ -25,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends CommonActivity {
+
+    private SoftKeyboardObserver mSoftKeyboardObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,19 @@ public class MainActivity extends CommonActivity {
                 showSoftKeyboardStatus.setText(softKeyboardStatus);
             }
         });
+
+        mSoftKeyboardObserver = new SoftKeyboardObserver(new SoftKeyboardObserver.SoftKeyboardListener() {
+            @Override
+            public void onSoftKeyboardOpen() {
+                showSoftKeyboardStatus.setText("观察到软键盘打开");
+            }
+
+            @Override
+            public void onSoftKeyboardClose() {
+                showSoftKeyboardStatus.setText("观察到软键盘关闭");
+            }
+        });
+        mSoftKeyboardObserver.register(this);
     }
 
     private String readAsset() {
@@ -136,6 +152,12 @@ public class MainActivity extends CommonActivity {
 
     private String getTimeNow() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSoftKeyboardObserver.unregister();
     }
 
 }
