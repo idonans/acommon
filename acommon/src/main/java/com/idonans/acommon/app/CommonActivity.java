@@ -21,11 +21,11 @@ public class CommonActivity extends AppCompatActivity implements Available {
         super.onCreate(savedInstanceState);
 
         {
-            // 修复根Activity重复启动的bug
+            // 修复根 Activity 重复启动的 bug
             if (!isTaskRoot()) {
                 Intent intent = getIntent();
                 if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(intent.getAction())) {
-                    CommonLog.d("close this launcher instance " + getClass().getName() + "@" + hashCode());
+                    CommonLog.e("close this launcher instance " + getClass().getName() + "@" + hashCode());
                     finish();
                     return;
                 }

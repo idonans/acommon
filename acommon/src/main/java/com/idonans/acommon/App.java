@@ -35,7 +35,7 @@ public class App {
         CommonLog.setLogLevel(sBuildConfigAdapter.getLogLevel());
         CommonLog.setLogTag(sBuildConfigAdapter.getLogTag());
         if (sBuildConfigAdapter.isDebug()) {
-            // 处理内存泄露
+            // 协助调试
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
@@ -43,10 +43,11 @@ public class App {
                     .build());
         }
 
-        // 预加载
+        // 预加载(可选)
         AppIDManager.getInstance();
         ProcessManager.getInstance();
         StorageManager.getInstance();
+
     }
 
     public static BuildConfigAdapter getBuildConfigAdapter() {

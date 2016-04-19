@@ -16,7 +16,7 @@ public class AppContext {
         return sContext;
     }
 
-    public static void setContext(Context context) {
+    public static void setContext(@NonNull Context context) {
         sContext = context.getApplicationContext();
     }
 
