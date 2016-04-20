@@ -246,4 +246,40 @@ public class FileUtil {
         return null;
     }
 
+    /**
+     * 以指定的文件名前缀和后缀在指定文件夹创建一个临时文件，如果创建失败，返回 null.
+     */
+    @CheckResult
+    public static File createNewTmpFileQuietly(String prefix, String suffix, File dir) {
+        try {
+            if (createDir(dir)) {
+                if (prefix == null) {
+                    prefix = "";
+                }
+                if (suffix == null) {
+                    suffix = ".tmp";
+                }
+
+                String filename = String.valueOf(System.currentTimeMillis());
+                File tmpFile = new File(dir, prefix + filename + suffix);
+
+                if (tmpFile.createNewFile()) {
+                    return tmpFile;
+                }
+
+                for (int i = 1; i < 20; i++) {
+                    tmpFile = new File(dir, prefix + filename + "(" + i + ")" + suffix);
+                    if (tmpFile.createNewFile()) {
+                        return tmpFile;
+                    }
+                }
+
+                throw new RuntimeException("相似文件太多 " + tmpFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

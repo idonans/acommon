@@ -6,12 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.IntDef;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.idonans.acommon.AppContext;
 import com.idonans.acommon.data.AppIDManager;
 
+import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 /**
@@ -77,4 +84,65 @@ public class SystemUtil {
         return rootView.getBottom() - contentView.getBottom() > softKeyboardHeight;
     }
 
+    /////
+
+    /**
+     * 正确处理，等待拍照结果，在 onActivityResult 中接收结果
+     */
+    public static final int TAKE_PHOTO_RESULT_OK = 0;
+    /**
+     * SD卡错误，不能创建用于存储拍照结果的文件
+     */
+    public static final int TAKE_PHOTO_RESULT_SDCARD_ERROR = 1;
+    /**
+     * 没有找到系统程序用来处理拍照请求
+     */
+    public static final int TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND = 2;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({TAKE_PHOTO_RESULT_OK, TAKE_PHOTO_RESULT_SDCARD_ERROR, TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND})
+    public @interface TakePhotoResult {
+    }
+
+    @TakePhotoResult
+    public int takePhoto(Fragment fragment, int requestCode) {
+        File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
+        if (file == null) {
+            Toast.makeText(AppContext.getContext(), "未找到SD卡", Toast.LENGTH_LONG).show();
+            return TAKE_PHOTO_RESULT_SDCARD_ERROR;
+        }
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+
+        List<ResolveInfo> infos = AppContext.getContext().getPackageManager().queryIntentActivities(intent, 0);
+        if (infos != null && infos.size() > 0) {
+            fragment.startActivityForResult(intent, requestCode);
+            return TAKE_PHOTO_RESULT_OK;
+        } else {
+            return TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND;
+        }
+    }
+
+    @TakePhotoResult
+    public int takePhoto(Activity activity, int requestCode) {
+        File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
+        if (file == null) {
+            Toast.makeText(AppContext.getContext(), "未找到SD卡", Toast.LENGTH_LONG).show();
+            return TAKE_PHOTO_RESULT_SDCARD_ERROR;
+        }
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+
+        List<ResolveInfo> infos = AppContext.getContext().getPackageManager().queryIntentActivities(intent, 0);
+        if (infos != null && infos.size() > 0) {
+            activity.startActivityForResult(intent, requestCode);
+            return TAKE_PHOTO_RESULT_OK;
+        } else {
+            return TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND;
+        }
+    }
+
+    /////
 }
