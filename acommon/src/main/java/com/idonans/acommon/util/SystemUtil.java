@@ -103,12 +103,17 @@ public class SystemUtil {
     public @interface TakePhotoResult {
     }
 
+    /**
+     * @param outPhotos 如果拍照成功，outPhotos[0] 将用来存储拍照的图
+     */
     @TakePhotoResult
-    public static int takePhoto(Fragment fragment, int requestCode) {
+    public static int takePhoto(Fragment fragment, int requestCode, File[] outPhotos) {
         File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
         if (file == null) {
             return TAKE_PHOTO_RESULT_SDCARD_ERROR;
         }
+
+        FileUtil.deleteFileQuietly(file);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
@@ -116,18 +121,24 @@ public class SystemUtil {
         List<ResolveInfo> infos = AppContext.getContext().getPackageManager().queryIntentActivities(intent, 0);
         if (infos != null && infos.size() > 0) {
             fragment.startActivityForResult(intent, requestCode);
+            outPhotos[0] = file;
             return TAKE_PHOTO_RESULT_OK;
         } else {
             return TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND;
         }
     }
 
+    /**
+     * @param outPhotos 如果拍照成功，outPhotos[0] 将用来存储拍照的图
+     */
     @TakePhotoResult
-    public static int takePhoto(Activity activity, int requestCode) {
+    public static int takePhoto(Activity activity, int requestCode, File[] outPhotos) {
         File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
         if (file == null) {
             return TAKE_PHOTO_RESULT_SDCARD_ERROR;
         }
+
+        FileUtil.deleteFileQuietly(file);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
@@ -135,6 +146,7 @@ public class SystemUtil {
         List<ResolveInfo> infos = AppContext.getContext().getPackageManager().queryIntentActivities(intent, 0);
         if (infos != null && infos.size() > 0) {
             activity.startActivityForResult(intent, requestCode);
+            outPhotos[0] = file;
             return TAKE_PHOTO_RESULT_OK;
         } else {
             return TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND;

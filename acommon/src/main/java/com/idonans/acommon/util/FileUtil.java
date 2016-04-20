@@ -38,6 +38,20 @@ public class FileUtil {
     }
 
     /**
+     * 判断指定的文件是否存在并且是一个文件(不是文件夹)
+     */
+    public static boolean isFile(File file) {
+        return file != null && file.exists() && file.isFile();
+    }
+
+    /**
+     * 判断指定的文件是否存在并且是一个文件夹
+     */
+    public static boolean isDir(File file) {
+        return file != null && file.exists() && file.isDirectory();
+    }
+
+    /**
      * 得到一个在系统拍照目录下，以当前应用标识为子文件夹名的目录(如果目录不存在则尝试创建)。
      * <p/>
      * 不能获得这样一个目录，返回 null.

@@ -24,13 +24,17 @@ import com.idonans.acommon.util.RegexUtil;
 import com.idonans.acommon.util.SystemUtil;
 import com.idonans.acommon.util.ViewUtil;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends CommonActivity {
 
+    private static final String EXTRA_OUT_PHOTO_PATH = "EXTRA_OUT_PHOTO_PATH";
     private static final int REQUEST_CODE_TAKE_PHOTO = 1;
     private SoftKeyboardObserver mSoftKeyboardObserver;
+
+    private File[] mOutPhotos = new File[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +138,27 @@ public class MainActivity extends CommonActivity {
         });
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String outPhotoPath = savedInstanceState.getString(EXTRA_OUT_PHOTO_PATH);
+        if (!TextUtils.isEmpty(outPhotoPath)) {
+            mOutPhotos[0] = new File(outPhotoPath);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mOutPhotos[0] != null) {
+            outState.putString(EXTRA_OUT_PHOTO_PATH, mOutPhotos[0].getAbsolutePath());
+        } else {
+            outState.putString(EXTRA_OUT_PHOTO_PATH, null);
+        }
+    }
+
     private void takePhoto() {
-        int takePhotoResult = SystemUtil.takePhoto(this, REQUEST_CODE_TAKE_PHOTO);
+        int takePhotoResult = SystemUtil.takePhoto(this, REQUEST_CODE_TAKE_PHOTO, mOutPhotos);
         CommonLog.d("takePhotoResult:" + takePhotoResult);
         switch (takePhotoResult) {
             case SystemUtil.TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND:
@@ -191,7 +214,12 @@ public class MainActivity extends CommonActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
-            //
+            if (resultCode == RESULT_OK) {
+                File outPhoto = mOutPhotos[0];
+                if (FileUtil.isFile(outPhoto)) {
+                    CommonLog.d("拍照成功，文件大小是 " + HumanUtil.getHumanSizeFromByte(outPhoto.length()));
+                }
+            }
         }
     }
 
