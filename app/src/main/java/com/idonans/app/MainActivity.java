@@ -6,11 +6,13 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.idonans.acommon.app.CommonActivity;
 import com.idonans.acommon.app.CommonService;
 import com.idonans.acommon.data.ProcessManager;
 import com.idonans.acommon.data.StorageManager;
+import com.idonans.acommon.lang.CommonLog;
 import com.idonans.acommon.lang.SoftKeyboardObserver;
 import com.idonans.acommon.util.AssetUtil;
 import com.idonans.acommon.util.AvailableUtil;
@@ -123,13 +125,29 @@ public class MainActivity extends CommonActivity {
         });
         mSoftKeyboardObserver.register(this);
 
-        View takePhoto = ViewUtil.findViewByID(this, R.id.take_photo);
+        final View takePhoto = ViewUtil.findViewByID(this, R.id.take_photo);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemUtil.takePhoto(MainActivity.this, REQUEST_CODE_TAKE_PHOTO);
+                takePhoto();
             }
         });
+    }
+
+    private void takePhoto() {
+        int takePhotoResult = SystemUtil.takePhoto(this, REQUEST_CODE_TAKE_PHOTO);
+        CommonLog.d("takePhotoResult:" + takePhotoResult);
+        switch (takePhotoResult) {
+            case SystemUtil.TAKE_PHOTO_RESULT_CAMERA_NOT_FOUND:
+                Toast.makeText(this, "照相机不可用", Toast.LENGTH_LONG).show();
+                break;
+            case SystemUtil.TAKE_PHOTO_RESULT_SDCARD_ERROR:
+                Toast.makeText(this, "SD卡不可用", Toast.LENGTH_LONG).show();
+                break;
+            case SystemUtil.TAKE_PHOTO_RESULT_OK:
+            default:
+                break;
+        }
     }
 
     private String readAsset() {
