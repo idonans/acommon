@@ -11,7 +11,6 @@ import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.idonans.acommon.AppContext;
 import com.idonans.acommon.data.AppIDManager;
@@ -108,7 +107,6 @@ public class SystemUtil {
     public static int takePhoto(Fragment fragment, int requestCode) {
         File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
         if (file == null) {
-            Toast.makeText(AppContext.getContext(), "未找到SD卡", Toast.LENGTH_LONG).show();
             return TAKE_PHOTO_RESULT_SDCARD_ERROR;
         }
 
@@ -128,7 +126,6 @@ public class SystemUtil {
     public static int takePhoto(Activity activity, int requestCode) {
         File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
         if (file == null) {
-            Toast.makeText(AppContext.getContext(), "未找到SD卡", Toast.LENGTH_LONG).show();
             return TAKE_PHOTO_RESULT_SDCARD_ERROR;
         }
 
