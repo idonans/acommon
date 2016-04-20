@@ -105,7 +105,7 @@ public class SystemUtil {
     }
 
     @TakePhotoResult
-    public int takePhoto(Fragment fragment, int requestCode) {
+    public static int takePhoto(Fragment fragment, int requestCode) {
         File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
         if (file == null) {
             Toast.makeText(AppContext.getContext(), "未找到SD卡", Toast.LENGTH_LONG).show();
@@ -125,7 +125,7 @@ public class SystemUtil {
     }
 
     @TakePhotoResult
-    public int takePhoto(Activity activity, int requestCode) {
+    public static int takePhoto(Activity activity, int requestCode) {
         File file = FileUtil.createNewTmpFileQuietly("camera", ".jpg", FileUtil.getPublicDCIMDir());
         if (file == null) {
             Toast.makeText(AppContext.getContext(), "未找到SD卡", Toast.LENGTH_LONG).show();

@@ -27,6 +27,7 @@ import java.util.Date;
 
 public class MainActivity extends CommonActivity {
 
+    private static final int REQUEST_CODE_TAKE_PHOTO = 1;
     private SoftKeyboardObserver mSoftKeyboardObserver;
 
     @Override
@@ -121,6 +122,14 @@ public class MainActivity extends CommonActivity {
             }
         });
         mSoftKeyboardObserver.register(this);
+
+        View takePhoto = ViewUtil.findViewByID(this, R.id.take_photo);
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemUtil.takePhoto(MainActivity.this, REQUEST_CODE_TAKE_PHOTO);
+            }
+        });
     }
 
     private String readAsset() {
@@ -158,6 +167,14 @@ public class MainActivity extends CommonActivity {
     protected void onDestroy() {
         super.onDestroy();
         mSoftKeyboardObserver.unregister();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
+            //
+        }
     }
 
 }
