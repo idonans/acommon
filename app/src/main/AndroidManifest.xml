@@ -22,6 +22,10 @@
             android:name="com.idonans.app.ContainActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <activity
+            android:name="com.idonans.app.FragmentContainerActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
 
         <service android:name="com.idonans.acommon.app.CommonService"/>
     </application>

@@ -145,6 +145,15 @@ public class MainActivity extends CommonActivity {
                 startActivity(intent);
             }
         });
+
+        View customKeyboard = ViewUtil.findViewByID(this, R.id.open_custom_keyboard);
+        customKeyboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = FragmentContainerActivity.newIntent(MainActivity.this, CustomKeyboardFragment.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
