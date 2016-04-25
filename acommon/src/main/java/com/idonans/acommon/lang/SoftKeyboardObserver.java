@@ -20,10 +20,11 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
     private static final String TAG = "SoftKeyboardObserver";
     private final SoftKeyboardListener mListener;
 
+    private final int METHOD_NONE = 0;
     private final int METHOD_OPEN = 1;
     private final int METHOD_CLOSE = 2;
     // 避免同一个回调被连续调用两次，比如避免连续调用两次软键盘打开。
-    private int mLastCallMethod;
+    private int mLastCallMethod = METHOD_NONE;
 
     private Activity mActivity;
     private View mContentView;
