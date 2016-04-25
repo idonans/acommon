@@ -28,8 +28,24 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
     private Activity mActivity;
     private View mContentView;
 
+    /**
+     * call constructor with param post true.
+     *
+     * @see #SoftKeyboardObserver(boolean, SoftKeyboardListener)
+     */
     public SoftKeyboardObserver(@Nullable SoftKeyboardListener listener) {
-        mListener = new SoftKeyboardListenerPoster(listener);
+        this(true, listener);
+    }
+
+    /**
+     * @param post 指定在键盘状态发生变更时，是否将事件 post 到下一个 ui 循环中回调
+     */
+    public SoftKeyboardObserver(boolean post, @Nullable SoftKeyboardListener listener) {
+        if (post) {
+            mListener = new SoftKeyboardListenerPoster(listener);
+        } else {
+            mListener = new SoftKeyboardListenerDirect(listener);
+        }
     }
 
     public void register(@NonNull Activity activity) {
@@ -124,6 +140,39 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
         public void onSoftKeyboardClose() {
             if (mListener != null) {
                 Threads.postUi(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.onSoftKeyboardClose();
+                    }
+                });
+            }
+        }
+
+    }
+
+    private class SoftKeyboardListenerDirect implements SoftKeyboardListener {
+        private final SoftKeyboardListener mListener;
+
+        private SoftKeyboardListenerDirect(SoftKeyboardListener listener) {
+            mListener = listener;
+        }
+
+        @Override
+        public void onSoftKeyboardOpen() {
+            if (mListener != null) {
+                Threads.runOnUi(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.onSoftKeyboardOpen();
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onSoftKeyboardClose() {
+            if (mListener != null) {
+                Threads.runOnUi(new Runnable() {
                     @Override
                     public void run() {
                         mListener.onSoftKeyboardClose();
