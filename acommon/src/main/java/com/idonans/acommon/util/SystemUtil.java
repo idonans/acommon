@@ -78,14 +78,14 @@ public class SystemUtil {
         return am.getMemoryClass() * 1024L * 1024L;
     }
 
-    public static void showSoftKeyboard(EditText editText) {
+    public static boolean showSoftKeyboard(EditText editText) {
         InputMethodManager inputMethodManager = (InputMethodManager) AppContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.showSoftInput(editText, 0);
+        return inputMethodManager.showSoftInput(editText, 0);
     }
 
-    public static void hideSoftKeyboard(EditText editText) {
+    public static boolean hideSoftKeyboard(EditText editText) {
         InputMethodManager inputMethodManager = (InputMethodManager) AppContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        return inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
     /**
