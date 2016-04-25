@@ -136,6 +136,15 @@ public class MainActivity extends CommonActivity {
                 takePhoto();
             }
         });
+
+        View view = ViewUtil.findViewByID(this, R.id.open_contain);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ContainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
