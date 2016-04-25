@@ -8,6 +8,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.Window;
@@ -74,12 +75,51 @@ public class SystemUtil {
     }
 
     /**
-     * 判断当前软键盘是否处于打开状态 (非全屏并且 windowSoftInputMode 为 adjustResize 时有效)
+     * @see #isSoftKeyboardShown(View)
      */
     public static boolean isSoftKeyboardShown(Activity activity) {
+        View view = null;
+        if (activity != null) {
+            Window window = activity.getWindow();
+            if (window != null) {
+                view = window.getDecorView();
+            }
+        }
+        return isSoftKeyboardShown(view);
+    }
+
+    /**
+     * @see #isSoftKeyboardShown(View)
+     */
+    public static boolean isSoftKeyboardShown(Fragment fragment) {
+        View view = null;
+        if (fragment != null) {
+            view = fragment.getView();
+        }
+        return isSoftKeyboardShown(view);
+    }
+
+    /**
+     * 判断当前软键盘是否处于打开状态 (非全屏并且 windowSoftInputMode 为 adjustResize 时有效)
+     *
+     * @return return false if view is null or not in view tree.
+     */
+    public static boolean isSoftKeyboardShown(@Nullable View view) {
+        if (view == null) {
+            return false;
+        }
+
+        View rootView = view.getRootView();
+        if (rootView == null) {
+            return false;
+        }
+
+        View contentView = rootView.findViewById(Window.ID_ANDROID_CONTENT);
+        if (contentView == null) {
+            return false;
+        }
+
         int softKeyboardHeight = DimenUtil.dp2px(100);
-        View contentView = activity.findViewById(Window.ID_ANDROID_CONTENT);
-        View rootView = contentView.getRootView();
         return rootView.getBottom() - contentView.getBottom() > softKeyboardHeight;
     }
 
