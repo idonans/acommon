@@ -50,30 +50,27 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
     }
 
     public void register(@NonNull Activity activity) {
-        if (mHost != null && mHost.contains(activity)) {
-            CommonLog.e(TAG + " already register on " + activity.getClass().getName() + "@" + activity.hashCode());
-            return;
-        }
-
         if (mHost != null) {
-            throw new IllegalAccessError("already register on another");
+            throw new IllegalAccessError("already register");
         }
 
         checkWindowSoftInputMode(activity);
 
-        mHost = new Host(activity, null);
+        mHost = new Host(activity);
 
-        if (mHost.mContentView != null) {
+        if (isHostAvailable()) {
             mHost.mContentView.getViewTreeObserver().addOnGlobalLayoutListener(this);
         }
     }
 
-    private void checkWindowSoftInputMode(@NonNull Activity activity) {
-        if (activity.getWindow() != null) {
-            if ((activity.getWindow().getAttributes().softInputMode & WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) == 0) {
-                throw new IllegalArgumentException("softInputMode is not adjustResize " + activity.getClass().getName() + "@" + activity.hashCode());
-            }
+    public void register(@NonNull Fragment fragment) {
+        Activity activity = SystemUtil.getActivityFromFragment(fragment);
+        if (activity == null) {
+            CommonLog.e(TAG + " register fragment error. activity not found from fragment " + fragment.getClass().getName() + "@" + fragment.hashCode());
+            return;
         }
+
+        register(activity);
     }
 
     public void unregister() {
@@ -82,7 +79,7 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
             return;
         }
 
-        if (mHost.mContentView != null) {
+        if (isHostAvailable()) {
             if (Build.VERSION.SDK_INT >= 16) {
                 mHost.mContentView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             } else {
@@ -123,36 +120,24 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
         }
     }
 
+    private void checkWindowSoftInputMode(@NonNull Activity activity) {
+        if (activity.getWindow() != null) {
+            if ((activity.getWindow().getAttributes().softInputMode & WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) == 0) {
+                throw new IllegalArgumentException("softInputMode is not adjustResize " + activity.getClass().getName() + "@" + activity.hashCode());
+            }
+        }
+    }
+
     private class Host {
-        private final Activity mActivity;
-        private final Fragment mFragment;
+        @Nullable
         private final View mContentView;
 
-        private Host(Activity activity, Fragment fragment) {
-            mActivity = activity;
-            mFragment = fragment;
-
-            if (mActivity != null) {
-                mContentView = mActivity.findViewById(Window.ID_ANDROID_CONTENT);
-            } else if (mFragment != null) {
-                View view = mFragment.getView();
-                if (view == null) {
-                    mContentView = null;
-                } else {
-                    View rootView = view.getRootView();
-                    if (rootView == null) {
-                        mContentView = null;
-                    } else {
-                        mContentView = rootView.findViewById(Window.ID_ANDROID_CONTENT);
-                    }
-                }
+        private Host(@Nullable Activity activity) {
+            if (activity != null) {
+                mContentView = activity.findViewById(Window.ID_ANDROID_CONTENT);
             } else {
                 mContentView = null;
             }
-        }
-
-        private boolean contains(Object object) {
-            return object != null && (mActivity == object || mFragment == object);
         }
 
         private boolean isSoftKeyboardShown() {

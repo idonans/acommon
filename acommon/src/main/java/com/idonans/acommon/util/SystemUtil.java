@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.CheckResult;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 
@@ -92,11 +94,7 @@ public class SystemUtil {
      * @see #isSoftKeyboardShown(View)
      */
     public static boolean isSoftKeyboardShown(Fragment fragment) {
-        View view = null;
-        if (fragment != null) {
-            view = fragment.getView();
-        }
-        return isSoftKeyboardShown(view);
+        return isSoftKeyboardShown(getActivityFromFragment(fragment));
     }
 
     /**
@@ -121,6 +119,20 @@ public class SystemUtil {
 
         int softKeyboardHeight = DimenUtil.dp2px(100);
         return rootView.getBottom() - contentView.getBottom() > softKeyboardHeight;
+    }
+
+    @CheckResult
+    public static FragmentActivity getActivityFromFragment(@Nullable Fragment fragment) {
+        if (fragment == null) {
+            return null;
+        }
+
+        FragmentActivity activity = fragment.getActivity();
+        if (activity != null) {
+            return activity;
+        }
+
+        return getActivityFromFragment(fragment.getParentFragment());
     }
 
     /////
