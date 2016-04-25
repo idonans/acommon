@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.idonans.acommon.app.CommonFragment;
+import com.idonans.acommon.lang.CommonLog;
 import com.idonans.acommon.lang.SoftKeyboardObserver;
 import com.idonans.acommon.util.ViewUtil;
 
@@ -16,6 +17,7 @@ import com.idonans.acommon.util.ViewUtil;
  */
 public class ChatFragment extends CommonFragment implements SoftKeyboardObserver.SoftKeyboardListener {
 
+    private static final String TAG = "ChatFragment";
     private EditText mEditText;
     private SoftKeyboardObserver mSoftKeyboardObserver;
 
@@ -63,6 +65,7 @@ public class ChatFragment extends CommonFragment implements SoftKeyboardObserver
 
     @Override
     public void onSoftKeyboardOpen() {
+        CommonLog.d(TAG + " onSoftKeyboardOpen");
         if (isAvailable()) {
             if (mEditText != null) {
                 mEditText.setText("观察到软键盘打开");
@@ -72,6 +75,7 @@ public class ChatFragment extends CommonFragment implements SoftKeyboardObserver
 
     @Override
     public void onSoftKeyboardClose() {
+        CommonLog.d(TAG + " onSoftKeyboardClose");
         if (isAvailable()) {
             if (mEditText != null) {
                 mEditText.setText("观察到软键盘关闭");
