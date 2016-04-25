@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name="com.idonans.app.FragmentContainerActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
 
         <service android:name="com.idonans.acommon.app.CommonService"/>

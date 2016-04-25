@@ -28,6 +28,8 @@ public class CustomKeyboardFragment extends CommonFragment implements SoftKeyboa
     private View mEmotionPanel;
     private TextView mShowInputContent;
 
+    private boolean mPendingToShowCustomInputPanel;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,10 @@ public class CustomKeyboardFragment extends CommonFragment implements SoftKeyboa
         mShowInputContent = ViewUtil.findViewByID(view, R.id.show_input_content);
     }
 
+    private void pendingToShowCustomInputPanel() {
+        mPendingToShowCustomInputPanel = true;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -68,21 +74,26 @@ public class CustomKeyboardFragment extends CommonFragment implements SoftKeyboa
         if (!isAvailable()) {
             return;
         }
+
+        if (mEmotionPanel != null) {
+            mEmotionPanel.setVisibility(View.GONE);
+        }
+
         if (mEmotionKeyboardSwitch != null) {
             mEmotionKeyboardSwitch.setText("表情输入");
             mEmotionKeyboardSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // close soft keyboard
+                    pendingToShowCustomInputPanel();
                     if (mInputEditText != null) {
-                        SystemUtil.hideSoftKeyboard(mInputEditText);
+                        if (!SystemUtil.hideSoftKeyboard(mInputEditText)) {
+                            // 当前软键盘已经处于关闭状态
+                            onSoftKeyboardClose();
+                        }
                     }
                 }
             });
-        }
-
-        if (mEmotionPanel != null) {
-            mEmotionPanel.setVisibility(View.GONE);
         }
     }
 
@@ -91,21 +102,47 @@ public class CustomKeyboardFragment extends CommonFragment implements SoftKeyboa
         if (!isAvailable()) {
             return;
         }
-        if (mEmotionKeyboardSwitch != null) {
-            mEmotionKeyboardSwitch.setText("键盘输入");
-            mEmotionKeyboardSwitch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // show soft keyboard
-                    if (mInputEditText != null) {
-                        SystemUtil.showSoftKeyboard(mInputEditText);
-                    }
-                }
-            });
-        }
 
-        if (mEmotionPanel != null) {
-            mEmotionPanel.setVisibility(View.VISIBLE);
+        if (mPendingToShowCustomInputPanel) {
+            mPendingToShowCustomInputPanel = false;
+
+            if (mEmotionPanel != null) {
+                mEmotionPanel.setVisibility(View.VISIBLE);
+            }
+
+            if (mEmotionKeyboardSwitch != null) {
+                mEmotionKeyboardSwitch.setText("键盘输入");
+                mEmotionKeyboardSwitch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // show soft keyboard
+                        if (mInputEditText != null) {
+                            SystemUtil.showSoftKeyboard(mInputEditText);
+                        }
+                    }
+                });
+            }
+        } else {
+            if (mEmotionPanel != null) {
+                mEmotionPanel.setVisibility(View.GONE);
+            }
+
+            if (mEmotionKeyboardSwitch != null) {
+                mEmotionKeyboardSwitch.setText("表情输入");
+                mEmotionKeyboardSwitch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // close soft keyboard
+                        pendingToShowCustomInputPanel();
+                        if (mInputEditText != null) {
+                            if (!SystemUtil.hideSoftKeyboard(mInputEditText)) {
+                                // 当前软键盘已经处于关闭状态
+                                onSoftKeyboardClose();
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
