@@ -14,6 +14,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.idonans.acommon.AppContext;
 import com.idonans.acommon.data.AppIDManager;
@@ -74,6 +76,16 @@ public class SystemUtil {
     public static long getMaxHeapSize() {
         ActivityManager am = (ActivityManager) AppContext.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         return am.getMemoryClass() * 1024L * 1024L;
+    }
+
+    public static void showSoftKeyboard(EditText editText) {
+        InputMethodManager inputMethodManager = (InputMethodManager) AppContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(editText, 0);
+    }
+
+    public static void hideSoftKeyboard(EditText editText) {
+        InputMethodManager inputMethodManager = (InputMethodManager) AppContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
     /**

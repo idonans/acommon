@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.idonans.acommon.app.CommonFragment;
 import com.idonans.acommon.lang.SoftKeyboardObserver;
+import com.idonans.acommon.util.SystemUtil;
 import com.idonans.acommon.util.ViewUtil;
 
 /**
@@ -73,6 +74,9 @@ public class CustomKeyboardFragment extends CommonFragment implements SoftKeyboa
                 @Override
                 public void onClick(View v) {
                     // close soft keyboard
+                    if (mInputEditText != null) {
+                        SystemUtil.hideSoftKeyboard(mInputEditText);
+                    }
                 }
             });
         }
@@ -93,6 +97,9 @@ public class CustomKeyboardFragment extends CommonFragment implements SoftKeyboa
                 @Override
                 public void onClick(View v) {
                     // show soft keyboard
+                    if (mInputEditText != null) {
+                        SystemUtil.showSoftKeyboard(mInputEditText);
+                    }
                 }
             });
         }
