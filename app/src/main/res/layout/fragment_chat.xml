@@ -13,5 +13,11 @@
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:id="@+id/nested_fragment_contain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
