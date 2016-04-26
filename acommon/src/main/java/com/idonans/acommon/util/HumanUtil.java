@@ -34,8 +34,6 @@ public class HumanUtil {
 
     /**
      * 返回这个数值的80%，结果为long类型。
-     *
-     * @return
      */
     private static long _80p(long input) {
         return input * 80 / 100;
