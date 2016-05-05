@@ -1,11 +1,7 @@
 package com.idonans.acommon;
 
 import android.content.Context;
-import android.os.StrictMode;
 
-import com.idonans.acommon.data.AppIDManager;
-import com.idonans.acommon.data.ProcessManager;
-import com.idonans.acommon.data.StorageManager;
 import com.idonans.acommon.lang.CommonLog;
 
 /**
@@ -34,20 +30,6 @@ public class App {
     private static void internalInit() {
         CommonLog.setLogLevel(sBuildConfigAdapter.getLogLevel());
         CommonLog.setLogTag(sBuildConfigAdapter.getLogTag());
-        if (sBuildConfigAdapter.isDebug()) {
-            // 协助调试
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build());
-        }
-
-        // 预加载(可选)
-        AppIDManager.getInstance();
-        ProcessManager.getInstance();
-        StorageManager.getInstance();
-
     }
 
     public static BuildConfigAdapter getBuildConfigAdapter() {
