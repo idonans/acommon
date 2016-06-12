@@ -2,6 +2,7 @@ package com.idonans.acommon;
 
 import android.content.Context;
 
+import com.idonans.acommon.data.FrescoManager;
 import com.idonans.acommon.lang.CommonLog;
 
 /**
@@ -13,7 +14,7 @@ public class App {
     private static boolean sInitCalled;
     private static BuildConfigAdapter sBuildConfigAdapter;
 
-    public static void init(Context context, BuildConfigAdapter buildConfigAdapter) {
+    public static void init(Config config) {
         synchronized (App.class) {
             if (sInitCalled) {
                 return;
@@ -21,15 +22,21 @@ public class App {
             sInitCalled = true;
         }
 
-        AppContext.setContext(context);
-        sBuildConfigAdapter = buildConfigAdapter;
-
-        internalInit();
+        config.check();
+        internalInit(config);
     }
 
-    private static void internalInit() {
+    private static void internalInit(Config config) {
+        AppContext.setContext(config.mContext);
+        sBuildConfigAdapter = config.mBuildConfigAdapter;
+
         CommonLog.setLogLevel(sBuildConfigAdapter.getLogLevel());
         CommonLog.setLogTag(sBuildConfigAdapter.getLogTag());
+
+        // 配置 fresco
+        if (config.mUseFresco) {
+            FrescoManager.getInstance();
+        }
     }
 
     public static BuildConfigAdapter getBuildConfigAdapter() {
@@ -50,6 +57,43 @@ public class App {
         int getLogLevel();
 
         boolean isDebug();
+    }
+
+    private App() {
+        // ignore
+    }
+
+
+    public static class Config {
+
+        private Context mContext;
+        private BuildConfigAdapter mBuildConfigAdapter;
+        private boolean mUseFresco = true;
+
+        public Config setContext(Context context) {
+            mContext = context;
+            return this;
+        }
+
+        public Config setBuildConfigAdapter(BuildConfigAdapter buildConfigAdapter) {
+            mBuildConfigAdapter = buildConfigAdapter;
+            return this;
+        }
+
+        public Config setUseFresco(boolean useFresco) {
+            mUseFresco = useFresco;
+            return this;
+        }
+
+        private void check() {
+            if (mContext == null) {
+                throw new IllegalArgumentException("context not set");
+            }
+
+            if (mBuildConfigAdapter == null) {
+                throw new IllegalArgumentException("build config adapter not set");
+            }
+        }
     }
 
 }

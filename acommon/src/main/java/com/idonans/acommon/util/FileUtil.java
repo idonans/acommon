@@ -38,6 +38,25 @@ public class FileUtil {
     }
 
     /**
+     * 获得一个进程安全的外部缓存目录(在扩展卡的当前 app cache目录下的一个与进程名相关的目录, 如果目录不存在，会尝试创建)，
+     * 该目录可能会被用户卸载。
+     * <p/>
+     * 不能获得这样一个目录，返回 null.
+     */
+    @CheckResult
+    public static File getExternalCacheDir() {
+        File cacheDir = AppContext.getContext().getExternalCacheDir();
+        if (cacheDir == null) {
+            return null;
+        }
+        File processCacheDir = new File(cacheDir, ProcessManager.getInstance().getProcessTag());
+        if (createDir(processCacheDir)) {
+            return processCacheDir;
+        }
+        return null;
+    }
+
+    /**
      * 判断指定的文件是否存在并且是一个文件(不是文件夹)
      */
     public static boolean isFile(File file) {

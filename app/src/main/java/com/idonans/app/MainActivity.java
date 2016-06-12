@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
 import com.idonans.acommon.app.CommonActivity;
 import com.idonans.acommon.app.CommonService;
 import com.idonans.acommon.data.ProcessManager;
@@ -154,6 +158,16 @@ public class MainActivity extends CommonActivity {
                 startActivity(intent);
             }
         });
+
+        fetchDraweeView((SimpleDraweeView) ViewUtil.findViewByID(this, R.id.drawee_view));
+    }
+
+    private void fetchDraweeView(SimpleDraweeView draweeView) {
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(ImageRequest.fromUri("http://img.zcool.cn/community/01b726575ccbe20000012e7eaf0b0b.jpg@900w_1l_2o"))
+                .setOldController(draweeView.getController())
+                .build();
+        draweeView.setController(controller);
     }
 
     @Override

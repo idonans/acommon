@@ -13,7 +13,9 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        App.init(this, new BuildConfigAdapterImpl());
+        App.init(new App.Config()
+                .setContext(this)
+                .setBuildConfigAdapter(new BuildConfigAdapterImpl()));
     }
 
 }
