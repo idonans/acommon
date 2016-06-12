@@ -232,6 +232,7 @@ public class MainActivity extends CommonActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
+            CommonLog.d("分析拍照结果...");
             if (resultCode == RESULT_OK) {
                 File outPhoto = mOutPhotos[0];
                 if (FileUtil.isFile(outPhoto)) {
