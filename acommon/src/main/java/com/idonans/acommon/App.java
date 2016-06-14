@@ -22,7 +22,6 @@ public class App {
             sInitCalled = true;
         }
 
-        config.check();
         internalInit(config);
     }
 
@@ -68,30 +67,46 @@ public class App {
 
         private Context mContext;
         private BuildConfigAdapter mBuildConfigAdapter;
-        private boolean mUseFresco = true;
+        private boolean mUseFresco;
 
-        public Config setContext(Context context) {
-            mContext = context;
-            return this;
+        private Config() {
         }
 
-        public Config setBuildConfigAdapter(BuildConfigAdapter buildConfigAdapter) {
-            mBuildConfigAdapter = buildConfigAdapter;
-            return this;
-        }
+        public static class Builder {
 
-        public Config setUseFresco(boolean useFresco) {
-            mUseFresco = useFresco;
-            return this;
-        }
+            private Context mContext;
+            private BuildConfigAdapter mBuildConfigAdapter;
+            private boolean mUseFresco = true;
 
-        private void check() {
-            if (mContext == null) {
-                throw new IllegalArgumentException("context not set");
+            public Builder setContext(Context context) {
+                mContext = context;
+                return this;
             }
 
-            if (mBuildConfigAdapter == null) {
-                throw new IllegalArgumentException("build config adapter not set");
+            public Builder setBuildConfigAdapter(BuildConfigAdapter buildConfigAdapter) {
+                mBuildConfigAdapter = buildConfigAdapter;
+                return this;
+            }
+
+            public Builder setUseFresco(boolean useFresco) {
+                mUseFresco = useFresco;
+                return this;
+            }
+
+            public Config build() {
+                if (mContext == null) {
+                    throw new IllegalArgumentException("context not set");
+                }
+
+                if (mBuildConfigAdapter == null) {
+                    throw new IllegalArgumentException("build config adapter not set");
+                }
+
+                Config config = new Config();
+                config.mContext = this.mContext;
+                config.mBuildConfigAdapter = this.mBuildConfigAdapter;
+                config.mUseFresco = this.mUseFresco;
+                return config;
             }
         }
     }
