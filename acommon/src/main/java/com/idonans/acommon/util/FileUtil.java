@@ -221,7 +221,7 @@ public class FileUtil {
     }
 
     /**
-     * 从指定 url 获取扩展名, 不包含扩展名分隔符<code>.<code/>，如果获取失败，返回 null.
+     * 从指定 url 获取扩展名, 不包含扩展名分隔符<code>.</code>，如果获取失败，返回 null.
      */
     @CheckResult
     public static String getFileExtensionFromUrl(String url) {
