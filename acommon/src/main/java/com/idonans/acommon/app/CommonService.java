@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 /**
- * 基类 Service.<p/>
+ * 基类 Service.<br>
  * 应用中常见的 Service 用处之一是作为进程重启的触发器， 后台任务使用线程实现更方便。
  * Created by idonans on 16-4-14.
  */

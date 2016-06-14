@@ -9,10 +9,10 @@ import com.idonans.acommon.lang.CommonLog;
 
 /**
  * 数据存储服务
- * <p/>
+ * <br>
  * 不同进程间的数据不同，不能使用此存储实现进程间共享数据。
  * 此处提供了 setting 和 cache 两个不同的存储空间，各自独立运行。
- * <p/>
+ * <br>
  * Created by idonans on 16-4-13.
  */
 public class StorageManager {
