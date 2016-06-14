@@ -65,8 +65,8 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * <pre>
      * 清除某一组数据，如果该组下没有数据，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
-     * [0] 标识被清除数据在整体数据中的开始位置，总是 >=0
-     * [1] 标识被清除的数据的长度(即清除前该组数据的数量)，总是 >0
+     * [0] 标识被清除数据在整体数据中的开始位置，总是 &gt;=0
+     * [1] 标识被清除的数据的长度(即清除前该组数据的数量)，总是 &gt;0
      *
      * 使用示例：
      * int[] positionAndSize = mAdapter.clearGroupItems(GROUP_DATA);
@@ -96,7 +96,7 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
     }
 
     /**
-     * 获取指定组在全局所在的开始位置, 总是 >=0
+     * 获取指定组在全局所在的开始位置, 总是 &gt;=0
      */
     public int getGroupPositionStart(int group) {
         int position = 0;
@@ -121,7 +121,7 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * <pre>
      * 清除指定组下指定位置的数据，如果该数据没有找到，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
-     * [0] 标识被清除数据在整体数据中的开始位置，总是 >=0
+     * [0] 标识被清除数据在整体数据中的开始位置，总是 &gt;=0
      * [1] 标识被清除的数据的长度，总是 =1
      *
      * 使用示例：
@@ -158,8 +158,8 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * <pre>
      * 清除指定组下指定位置区域的数据，如果该区域不合法，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
-     * [0] 标识被清除数据在整体数据中的开始位置，总是 >=0
-     * [1] 标识被清除的数据的长度，总是 > 0
+     * [0] 标识被清除数据在整体数据中的开始位置，总是 &gt;=0
+     * [1] 标识被清除的数据的长度，总是 &gt; 0
      *
      * 使用示例：
      * int[] positionAndSize = mAdapter.removeGroupItems(GROUP_DATA, 3, 2); // 删除该组数据的第3项和第4项
@@ -218,8 +218,8 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * <pre>
      * 获取指定位置所在的组以及组内的位置，如果该位置没有找到，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
-     * [0] 标识所在的组，总是 >=0
-     * [1] 标识在该组内所处的位置，总是 >=0
+     * [0] 标识所在的组，总是 &gt;=0
+     * [1] 标识在该组内所处的位置，总是 &gt;=0
      *
      * 使用示例：
      * int[] groupAndPosition = mAdapter.getGroupAndPosition(13);
@@ -285,8 +285,8 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * <pre>
      * 清除指定位置附近的数据，如果没有数据可以匹配，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
-     * [0] 标识被清除数据在整体数据中的开始位置, 总是 >= 0
-     * [1] 标识被清除的数据的长度，总是 > 0
+     * [0] 标识被清除数据在整体数据中的开始位置, 总是 &gt;= 0
+     * [1] 标识被清除的数据的长度，总是 &gt; 0
      *
      * Filter 用来匹配需要删除的数据，所删除的数据总是在同一组并且相邻
      *
@@ -441,7 +441,7 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * 清除所有数据，如果该数据没有找到，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
      * [0] 标识被清除数据在整体数据中的开始位置, 总是 =0
-     * [1] 标识被清除的数据的长度，总是 >0 (与此前整个数据的长度相等)
+     * [1] 标识被清除的数据的长度，总是 &gt;0 (与此前整个数据的长度相等)
      *
      * 使用示例：
      * int[] positionAndSize = mAdapter.clearAll();
@@ -488,8 +488,8 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * <pre>
      * 向指定组中的指定位置添加数据，如果数据为空，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
-     * [0] 标识添加的数据在整体数据中的开始位置 总是 >=0
-     * [1] 标识添加的数据的长度，总是 >0
+     * [0] 标识添加的数据在整体数据中的开始位置 总是 &gt;=0
+     * [1] 标识添加的数据的长度，总是 &gt;0
      *
      * 使用示例：
      * int[] positionAndSize = mAdapter.insertGroupItems(GROUP_DATA, 2, items);
@@ -530,8 +530,8 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
      * <pre>
      * 向指定组中添加数据，如果数据为空，返回null.
      * 否则返回一个长度为 2 的整数数组，其中
-     * [0] 标识添加的数据在整体数据中的开始位置 总是 >=0
-     * [1] 标识添加的数据的长度，总是 >0
+     * [0] 标识添加的数据在整体数据中的开始位置 总是 &gt;=0
+     * [1] 标识添加的数据的长度，总是 &gt;0
      *
      * 使用示例：
      * int[] positionAndSize = mAdapter.appendGroupItems(GROUP_DATA, items);
