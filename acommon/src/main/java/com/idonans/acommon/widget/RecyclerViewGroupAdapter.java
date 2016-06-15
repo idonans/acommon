@@ -392,7 +392,7 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
             return new int[]{fromPosition, toPosition};
         }
 
-        /**
+        /*
          * 从from到to的方向，to后面的一个位置. 当前位置不能移动，但是当前位置的下一个位置可以移动时，仍然要处理移动。
          * 此时应当移动到下一个位置前面(向移动前的位置的方向)。
          */
