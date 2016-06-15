@@ -85,6 +85,7 @@ task javadoc(type: Javadoc) {
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charset', 'UTF-8');
+    failOnError false
 }
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
