@@ -1,4 +1,4 @@
-package com.idonans.app;
+package com.idonans.acommon.demo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

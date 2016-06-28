@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.idonans.app">
+          package="com.idonans.acommon.demo">
 
     <application
-        android:name="com.idonans.app.MainApplication"
+        android:name="com.idonans.acommon.demo.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="false"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.idonans.app.MainActivity"
+            android:name="com.idonans.acommon.demo.MainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,15 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.idonans.app.ContainActivity"
+            android:name="com.idonans.acommon.demo.ContainActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name="com.idonans.app.FragmentContainerActivity"
+            android:name="com.idonans.acommon.demo.FragmentContainerActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
-
-        <service android:name="com.idonans.acommon.app.CommonService"/>
     </application>
 
 </manifest>

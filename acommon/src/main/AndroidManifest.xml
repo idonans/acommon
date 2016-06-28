@@ -8,8 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="false">
+        android:supportsRtl="true">
 
+        <service android:name="com.idonans.acommon.app.CommonService"/>
     </application>
 
 </manifest>

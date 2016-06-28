@@ -1,4 +1,4 @@
-package com.idonans.app;
+package com.idonans.acommon.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
