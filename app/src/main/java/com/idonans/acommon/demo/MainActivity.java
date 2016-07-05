@@ -26,6 +26,7 @@ import com.idonans.acommon.util.HumanUtil;
 import com.idonans.acommon.util.MD5Util;
 import com.idonans.acommon.util.RegexUtil;
 import com.idonans.acommon.util.SystemUtil;
+import com.idonans.acommon.util.TimeUtil;
 import com.idonans.acommon.util.ViewUtil;
 
 import java.io.File;
@@ -75,6 +76,8 @@ public class MainActivity extends CommonActivity {
         builder.append("public music dir:").append(FileUtil.getPublicMusicDir()).append("\n");
         builder.append("public movie dir:").append(FileUtil.getPublicMovieDir()).append("\n");
         builder.append("public dir alarms:").append(FileUtil.getPublicDir(Environment.DIRECTORY_ALARMS)).append("\n");
+        builder.append("auto time zone:").append(TimeUtil.isSystemAutoTimeZone()).append("\n");
+        builder.append("auto time:").append(TimeUtil.isSystemAutoTime()).append("\n");
         text.setText(builder);
 
         View printDBContent = ViewUtil.findViewByID(this, R.id.print_db_content);
