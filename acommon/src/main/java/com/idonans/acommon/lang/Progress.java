@@ -50,7 +50,7 @@ public class Progress {
      */
     public int getPercent() {
         int percent = 0;
-        if (mTotal >= 0 && mCurrent >= 0) {
+        if (mTotal > 0 && mCurrent > 0) {
             if (mCurrent <= mTotal) {
                 // 此处使用浮点运算，避免long * 100越界。
                 percent = Float.valueOf(1f * mCurrent / mTotal * 100).intValue();
