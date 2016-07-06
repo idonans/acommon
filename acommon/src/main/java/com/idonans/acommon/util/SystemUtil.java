@@ -218,4 +218,18 @@ public class SystemUtil {
     }
 
     /////
+
+    /**
+     * 将指定文件添加到系统媒体库，如将一张图片添加到系统媒体库，使得在 Gallery 中能够显示.
+     */
+    public static void addToMediaStore(File file) {
+        try {
+            Uri uri = Uri.fromFile(file);
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+            AppContext.getContext().sendBroadcast(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
