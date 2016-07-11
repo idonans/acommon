@@ -2,6 +2,7 @@
 Android common lib
 
 # how to use
-https://bintray.com/idonans/maven/acommon/view
+[ ![Download](https://api.bintray.com/packages/idonans/maven/acommon/images/download.svg) ](https://bintray.com/idonans/maven/acommon/_latestVersion)
+
 
 
