@@ -145,6 +145,19 @@ public class SimpleDB {
         return -1;
     }
 
+    /**
+     * 清空数据，返回删除数据的条数, 如果出错，返回 -1.
+     */
+    public int clear() {
+        try {
+            SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+            return db.delete(TABLE_NAME, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public void remove(@Nullable String key) {
         if (TextUtils.isEmpty(key)) {
             return;
