@@ -14,7 +14,7 @@ public class App {
     private static boolean sInitCalled;
     private static BuildConfigAdapter sBuildConfigAdapter;
 
-    public static void init(Config config) {
+    private static void init(Config config) {
         synchronized (App.class) {
             if (sInitCalled) {
                 return;
@@ -70,6 +70,10 @@ public class App {
         private boolean mUseFresco;
 
         private Config() {
+        }
+
+        public void init() {
+            App.init(this);
         }
 
         public static class Builder {
