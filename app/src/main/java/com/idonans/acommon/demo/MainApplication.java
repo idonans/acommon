@@ -13,10 +13,10 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        App.init(new App.Config.Builder()
+        new App.Config.Builder()
                 .setContext(this)
                 .setBuildConfigAdapter(new BuildConfigAdapterImpl())
-                .build());
+                .build().init();
     }
 
 }
