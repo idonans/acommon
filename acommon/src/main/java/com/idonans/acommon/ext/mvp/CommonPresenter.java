@@ -34,7 +34,7 @@ public abstract class CommonPresenter<V extends CommonView> implements Available
      * 如果当前 presenter 未完成初始化，则会在初始化完成之后执行
      */
     public void runAfterInit(final boolean runOnUi, final Runnable runnable) {
-        if (!AvailableUtil.isAvailable(runnable)) {
+        if (!isAvailable() || !AvailableUtil.isAvailable(runnable)) {
             return;
         }
 
