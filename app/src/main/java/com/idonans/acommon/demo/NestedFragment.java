@@ -88,7 +88,13 @@ public class NestedFragment extends CommonFragment implements SoftKeyboardObserv
             window.setStatusBarColor(Color.TRANSPARENT);
         }
 
-        window.getDecorView().requestLayout();
+        final View view = window.getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                view.requestLayout();
+            }
+        });
     }
 
     @Override
