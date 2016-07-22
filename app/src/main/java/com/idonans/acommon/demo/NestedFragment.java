@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.idonans.acommon.app.CommonFragment;
 import com.idonans.acommon.lang.CommonLog;
 import com.idonans.acommon.lang.SoftKeyboardObserver;
+import com.idonans.acommon.lang.Threads;
 import com.idonans.acommon.util.ViewUtil;
 
 /**
@@ -89,7 +90,7 @@ public class NestedFragment extends CommonFragment implements SoftKeyboardObserv
         }
 
         final View view = window.getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
-        view.post(new Runnable() {
+        Threads.postUi(new Runnable() {
             @Override
             public void run() {
                 view.requestLayout();
