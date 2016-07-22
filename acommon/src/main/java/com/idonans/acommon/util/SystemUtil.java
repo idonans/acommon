@@ -138,9 +138,9 @@ public class SystemUtil {
             return false;
         }
 
-        View noneFitSystemWindowFrameLayout = contentView.findViewById(R.id.acommon_none_fit_system_window_content);
-        if (noneFitSystemWindowFrameLayout != null) {
-            contentView = noneFitSystemWindowFrameLayout;
+        View autoFitSystemWindowContent = contentView.findViewById(R.id.acommon_auto_fit_system_window_content);
+        if (autoFitSystemWindowContent != null) {
+            contentView = autoFitSystemWindowContent;
         }
 
         int softKeyboardHeight = DimenUtil.dp2px(100);

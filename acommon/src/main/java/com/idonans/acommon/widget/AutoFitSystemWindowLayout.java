@@ -13,33 +13,33 @@ import com.idonans.acommon.R;
 /**
  * Created by idonans on 2016/7/21.
  */
-public class NoneFitSystemWindowFrameLayout extends FrameLayout {
+public class AutoFitSystemWindowLayout extends FrameLayout {
 
-    public NoneFitSystemWindowFrameLayout(Context context) {
+    public AutoFitSystemWindowLayout(Context context) {
         super(context);
     }
 
-    public NoneFitSystemWindowFrameLayout(Context context, AttributeSet attrs) {
+    public AutoFitSystemWindowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public NoneFitSystemWindowFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AutoFitSystemWindowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public NoneFitSystemWindowFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AutoFitSystemWindowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
     private void init() {
-        if (getId() != NO_ID && getId() != R.id.acommon_none_fit_system_window_content) {
-            throw new IllegalArgumentException("id should set with R.id.acommon_none_fit_system_window_content");
+        if (getId() != NO_ID && getId() != R.id.acommon_auto_fit_system_window_content) {
+            throw new IllegalArgumentException("id should set with R.id.acommon_auto_fit_system_window_content");
         }
-        setId(R.id.acommon_none_fit_system_window_content);
+        setId(R.id.acommon_auto_fit_system_window_content);
     }
 
     @SuppressWarnings("deprecation")
