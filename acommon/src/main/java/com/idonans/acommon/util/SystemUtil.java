@@ -5,7 +5,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.CheckResult;
 import android.support.annotation.IntDef;
@@ -14,22 +16,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.idonans.acommon.AppContext;
+import com.idonans.acommon.R;
 import com.idonans.acommon.data.AppIDManager;
+import com.idonans.acommon.lang.CommonLog;
+import com.idonans.acommon.lang.Threads;
 
 import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 一些系统相关辅助类
  * Created by idonans on 16-4-14.
  */
 public class SystemUtil {
+
+    private static final String TAG = "SystemUtil";
 
     /**
      * @see AppIDManager
@@ -129,8 +138,56 @@ public class SystemUtil {
             return false;
         }
 
+        View noneFitSystemWindowFrameLayout = contentView.findViewById(R.id.acommon_none_fit_system_window_content);
+        if (noneFitSystemWindowFrameLayout != null) {
+            contentView = noneFitSystemWindowFrameLayout;
+        }
+
         int softKeyboardHeight = DimenUtil.dp2px(100);
-        return rootView.getBottom() - contentView.getBottom() > softKeyboardHeight;
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(TAG + " isSoftKeyboardShown");
+        builder.append("\nrootView " + rootView.getClass().getName() + ", bottom:" + rootView.getBottom() + ", padding:" + getPadding(rootView));
+        builder.append("\ncontentView " + contentView.getClass().getName() + ", bottom:" + contentView.getBottom() + ", padding:" + getPadding(contentView));
+        builder.append("\nsoftKeyboardHeight:" + softKeyboardHeight);
+        CommonLog.d(builder);
+
+        return rootView.getBottom() - (contentView.getBottom() - contentView.getPaddingBottom()) > softKeyboardHeight;
+    }
+
+    private static String getPadding(View view) {
+        return String.format(Locale.getDefault(), "[%s, %s, %s, %s]",
+                view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+    }
+
+    public static void hideStatusBar(Window window) {
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    public static void showStatusBar(Window window) {
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    public static void setStatusBarTransparent(Window window) {
+        if (Build.VERSION.SDK_INT >= 19) {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        final View view = window.getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
+        Threads.postUi(new Runnable() {
+            @Override
+            public void run() {
+                view.requestLayout();
+            }
+        });
     }
 
     @CheckResult

@@ -1,20 +1,16 @@
 package com.idonans.acommon.demo;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.idonans.acommon.app.CommonFragment;
 import com.idonans.acommon.lang.CommonLog;
 import com.idonans.acommon.lang.SoftKeyboardObserver;
-import com.idonans.acommon.lang.Threads;
+import com.idonans.acommon.util.SystemUtil;
 import com.idonans.acommon.util.ViewUtil;
 
 /**
@@ -47,53 +43,21 @@ public class NestedFragment extends CommonFragment implements SoftKeyboardObserv
         hideStatusBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideStatusBar(getActivity().getWindow());
+                SystemUtil.hideStatusBar(getActivity().getWindow());
             }
         });
         View showStatusBar = ViewUtil.findViewByID(view, R.id.show_status_bar);
         showStatusBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showStatusBar(getActivity().getWindow());
+                SystemUtil.showStatusBar(getActivity().getWindow());
             }
         });
         View transparentStatusBar = ViewUtil.findViewByID(view, R.id.transparent_status_bar);
         transparentStatusBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setStatusBarTransparent(getActivity().getWindow());
-            }
-        });
-    }
-
-    private void hideStatusBar(Window window) {
-        window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
-    private void showStatusBar(Window window) {
-        window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
-
-    public void setStatusBarTransparent(Window window) {
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-
-        final View view = window.getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
-        Threads.postUi(new Runnable() {
-            @Override
-            public void run() {
-                view.requestLayout();
+                SystemUtil.setStatusBarTransparent(getActivity().getWindow());
             }
         });
     }
