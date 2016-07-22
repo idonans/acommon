@@ -29,7 +29,6 @@ public class NestedFragment extends CommonFragment implements SoftKeyboardObserv
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSoftKeyboardObserver = new SoftKeyboardObserver(this);
-        setStatusBarTransparent(getActivity().getWindow());
     }
 
     @Nullable
@@ -57,29 +56,39 @@ public class NestedFragment extends CommonFragment implements SoftKeyboardObserv
                 showStatusBar(getActivity().getWindow());
             }
         });
+        View transparentStatusBar = ViewUtil.findViewByID(view, R.id.transparent_status_bar);
+        transparentStatusBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setStatusBarTransparent(getActivity().getWindow());
+            }
+        });
     }
 
     private void hideStatusBar(Window window) {
         window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_FULLSCREEN);
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     private void showStatusBar(Window window) {
         window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
     public void setStatusBarTransparent(Window window) {
-        showStatusBar(window);
         if (Build.VERSION.SDK_INT >= 19) {
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+        if (Build.VERSION.SDK_INT >= 21) {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+
+        window.getDecorView().requestLayout();
     }
 
     @Override

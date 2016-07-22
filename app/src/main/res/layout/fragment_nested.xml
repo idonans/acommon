@@ -29,5 +29,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="show status bar"/>
+
+        <Button
+            android:id="@+id/transparent_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="transparent status bar"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
