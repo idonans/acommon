@@ -30,25 +30,17 @@ public class NoneFitSystemWindowFrameLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected final boolean fitSystemWindows(Rect insets) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // Intentionally do not modify the bottom inset. For some reason,
-            // if the bottom inset is modified, window resizing stops working.
-            insets.left = 0;
-            insets.top = 0;
-            insets.right = 0;
-        }
-
+        insets.set(0, 0, 0, insets.bottom);
         return super.fitSystemWindows(insets);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     @Override
     public final WindowInsets onApplyWindowInsets(WindowInsets insets) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            insets = insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom());
-        }
-
+        insets = insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom());
         return super.onApplyWindowInsets(insets);
     }
 
