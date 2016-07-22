@@ -171,14 +171,21 @@ public class SystemUtil {
     }
 
     public static void setStatusBarTransparent(Window window) {
+        boolean hasSet = false;
         if (Build.VERSION.SDK_INT >= 19) {
+            hasSet = true;
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
         if (Build.VERSION.SDK_INT >= 21) {
+            hasSet = true;
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        if (!hasSet) {
+            return;
         }
 
         final View view = window.getDecorView().findViewById(Window.ID_ANDROID_CONTENT);

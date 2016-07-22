@@ -53,13 +53,6 @@ public class NestedFragment extends CommonFragment implements SoftKeyboardObserv
                 SystemUtil.showStatusBar(getActivity().getWindow());
             }
         });
-        View transparentStatusBar = ViewUtil.findViewByID(view, R.id.transparent_status_bar);
-        transparentStatusBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SystemUtil.setStatusBarTransparent(getActivity().getWindow());
-            }
-        });
     }
 
     @Override

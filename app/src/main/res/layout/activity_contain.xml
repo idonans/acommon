@@ -10,10 +10,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:background="#ffff00"/>
+            android:layout_height="wrap_content"
+            android:background="#0000ff">
+
+            <include layout="@layout/acommon_auto_status_bar_space"/>
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/content"
