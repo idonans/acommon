@@ -14,7 +14,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0000ff">
+            android:background="#00ff00">
 
             <include layout="@layout/acommon_status_bar_space"/>
         </FrameLayout>
