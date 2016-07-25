@@ -194,16 +194,17 @@ public class SystemUtil {
     public static void setStatusBarTransparent(Window window) {
         setSystemUiFullStable(window.getDecorView());
         boolean hasSet = false;
-        if (Build.VERSION.SDK_INT >= 19) {
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            hasSet = true;
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else if (Build.VERSION.SDK_INT >= 19) {
             hasSet = true;
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            hasSet = true;
-            window.setStatusBarColor(Color.TRANSPARENT);
         }
 
         if (!hasSet) {
