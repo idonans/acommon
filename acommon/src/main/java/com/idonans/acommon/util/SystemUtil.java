@@ -160,11 +160,25 @@ public class SystemUtil {
                 view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
     }
 
+    /**
+     * 注意：在 4.4 (不含)以下的系统中，隐藏状态栏之后，如果页面上有输入框，当软键盘弹出时，不会自动恢复显示 status bar 内容, 同时会使得软键盘状态监听失效.
+     * 在 4.4 (含)以上的系统中, 当软键盘弹出时，会自动显示隐藏的状态栏，软键盘监听逻辑也同样有效。
+     *
+     * @param view
+     * @see #isSoftKeyboardShown(View)
+     * @see #hideStatusBarOnKitkat(View)
+     */
     public static void hideStatusBar(View view) {
         view.getRootView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    public static void hideStatusBarOnKitkat(View view) {
+        if (Build.VERSION.SDK_INT >= 19) {
+            hideStatusBar(view);
+        }
     }
 
     public static void showStatusBar(View view) {
