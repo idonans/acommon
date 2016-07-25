@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffff00"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -17,6 +18,13 @@
 
             <include layout="@layout/acommon_status_bar_space"/>
         </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#00ff00"
+            android:gravity="center_vertical"
+            android:text="title"/>
 
         <FrameLayout
             android:id="@+id/content"

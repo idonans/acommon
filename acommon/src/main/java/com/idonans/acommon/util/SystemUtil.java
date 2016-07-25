@@ -161,14 +161,14 @@ public class SystemUtil {
     }
 
     public static void hideStatusBar(View view) {
-        view.setSystemUiVisibility(
+        view.getRootView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     public static void showStatusBar(View view) {
-        view.setSystemUiVisibility(
+        view.getRootView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
