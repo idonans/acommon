@@ -43,14 +43,14 @@ public class NestedFragment extends CommonFragment implements SoftKeyboardObserv
         hideStatusBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemUtil.hideStatusBar(getActivity().getWindow());
+                SystemUtil.hideStatusBar(v);
             }
         });
         View showStatusBar = ViewUtil.findViewByID(view, R.id.show_status_bar);
         showStatusBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemUtil.showStatusBar(getActivity().getWindow());
+                SystemUtil.showStatusBar(v);
             }
         });
     }
