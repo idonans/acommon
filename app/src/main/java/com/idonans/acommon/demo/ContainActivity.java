@@ -15,9 +15,9 @@ public class ContainActivity extends CommonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contain);
-
         SystemUtil.setStatusBarTransparent(getWindow());
+
+        setContentView(R.layout.activity_contain);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.content);

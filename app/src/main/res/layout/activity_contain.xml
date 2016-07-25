@@ -24,7 +24,7 @@
             android:layout_height="45dp"
             android:background="#00ff00"
             android:gravity="center_vertical"
-            android:text="title"/>
+            android:text="transparent status bar"/>
 
         <FrameLayout
             android:id="@+id/content"
