@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:background="#0000ff">
 
-            <include layout="@layout/acommon_auto_status_bar_space"/>
+            <include layout="@layout/acommon_status_bar_space"/>
         </FrameLayout>
 
         <FrameLayout
