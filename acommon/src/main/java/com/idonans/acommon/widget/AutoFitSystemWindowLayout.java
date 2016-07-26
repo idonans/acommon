@@ -44,6 +44,7 @@ public class AutoFitSystemWindowLayout extends FrameLayout {
             throw new IllegalArgumentException("id should set with R.id.acommon_auto_fit_system_window_content");
         }
         setId(R.id.acommon_auto_fit_system_window_content);
+        setFitsSystemWindows(true);
     }
 
     @SuppressWarnings("deprecation")
