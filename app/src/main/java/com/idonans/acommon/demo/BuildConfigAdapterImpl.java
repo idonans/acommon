@@ -26,6 +26,16 @@ public class BuildConfigAdapterImpl implements App.BuildConfigAdapter {
     }
 
     @Override
+    public String getPublicSubDirName() {
+        return BuildConfig.APPLICATION_ID;
+    }
+
+    @Override
+    public String getChannel() {
+        return "default_channel";
+    }
+
+    @Override
     public int getLogLevel() {
         return Log.DEBUG;
     }
