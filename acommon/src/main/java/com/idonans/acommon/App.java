@@ -53,6 +53,10 @@ public class App {
 
         String getLogTag();
 
+        String getPublicSubDirName();
+
+        String getChannel();
+
         int getLogLevel();
 
         boolean isDebug();
