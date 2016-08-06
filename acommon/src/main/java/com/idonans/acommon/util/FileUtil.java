@@ -4,6 +4,7 @@ import android.os.Environment;
 import android.support.annotation.CheckResult;
 import android.text.TextUtils;
 
+import com.idonans.acommon.App;
 import com.idonans.acommon.AppContext;
 import com.idonans.acommon.data.ProcessManager;
 
@@ -132,7 +133,7 @@ public class FileUtil {
             return null;
         }
 
-        File appEnvDir = new File(envDir, AppContext.getContext().getPackageName());
+        File appEnvDir = new File(envDir, App.getBuildConfigAdapter().getPublicSubDirName());
         if (createDir(appEnvDir)) {
             return appEnvDir;
         }
