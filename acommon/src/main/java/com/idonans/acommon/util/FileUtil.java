@@ -316,4 +316,47 @@ public class FileUtil {
         return null;
     }
 
+    /**
+     * 创建一个新文件，如果指定的文件已经存在，则尝试创建一个相似的文件，返回创建成功的文件路径，如果创建失败，返回 null.
+     *
+     * @param path
+     * @return
+     */
+    @CheckResult
+    public static String createSimilarFileQuietly(String path) {
+        try {
+            File f = new File(path);
+            File parent = f.getParentFile();
+            String filename = f.getName();
+
+            String extension = FileUtil.getFileExtensionFromUrl(filename);
+            if (!TextUtils.isEmpty(extension)) {
+                filename = filename.substring(0, filename.length() - extension.length() - 1);
+                extension = "." + extension;
+            } else {
+                extension = "";
+            }
+
+            if (FileUtil.createDir(parent)) {
+                File tmpFile = new File(parent, filename + extension);
+
+                if (tmpFile.createNewFile()) {
+                    return tmpFile.getAbsolutePath();
+                }
+
+                for (int i = 1; i < 20; i++) {
+                    tmpFile = new File(parent, filename + "(" + i + ")" + extension);
+                    if (tmpFile.createNewFile()) {
+                        return tmpFile.getAbsolutePath();
+                    }
+                }
+
+                throw new RuntimeException("相似文件太多 " + tmpFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
