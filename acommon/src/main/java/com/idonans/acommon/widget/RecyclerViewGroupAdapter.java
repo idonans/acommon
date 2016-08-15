@@ -25,12 +25,20 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
     private final RecyclerView mRecyclerView;
 
     public RecyclerViewGroupAdapter(RecyclerView recyclerView) {
-        mData = new SparseArrayCompat(5);
+        this(new SparseArrayCompat(5), recyclerView);
+    }
+
+    public RecyclerViewGroupAdapter(SparseArrayCompat data, RecyclerView recyclerView) {
+        mData = data;
         mRecyclerView = recyclerView;
     }
 
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
+    }
+
+    public SparseArrayCompat getData() {
+        return mData;
     }
 
     /**
@@ -207,7 +215,7 @@ public class RecyclerViewGroupAdapter<VH extends RecyclerView.ViewHolder> extend
         return result;
     }
 
-    private static class ArrayListWrapper extends ArrayList {
+    private static final class ArrayListWrapper extends ArrayList {
 
         public ArrayListWrapper(int capacity) {
             super(capacity);
