@@ -1,6 +1,7 @@
 package com.idonans.acommon;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.idonans.acommon.data.FrescoManager;
 import com.idonans.acommon.lang.CommonLog;
@@ -13,6 +14,8 @@ public class App {
 
     private static boolean sInitCalled;
     private static BuildConfigAdapter sBuildConfigAdapter;
+
+    private static String sDefaultUserAgent;
 
     private static void init(Config config) {
         synchronized (App.class) {
@@ -28,6 +31,7 @@ public class App {
     private static void internalInit(Config config) {
         AppContext.setContext(config.mContext);
         sBuildConfigAdapter = config.mBuildConfigAdapter;
+        sDefaultUserAgent = config.mDefaultUserAgent;
 
         CommonLog.setLogLevel(sBuildConfigAdapter.getLogLevel());
         CommonLog.setLogTag(sBuildConfigAdapter.getLogTag());
@@ -36,6 +40,10 @@ public class App {
         if (config.mUseFresco) {
             FrescoManager.getInstance();
         }
+    }
+
+    public static String getDefaultUserAgent() {
+        return sDefaultUserAgent;
     }
 
     public static BuildConfigAdapter getBuildConfigAdapter() {
@@ -72,6 +80,7 @@ public class App {
         private Context mContext;
         private BuildConfigAdapter mBuildConfigAdapter;
         private boolean mUseFresco;
+        private String mDefaultUserAgent;
 
         private Config() {
         }
@@ -85,6 +94,7 @@ public class App {
             private Context mContext;
             private BuildConfigAdapter mBuildConfigAdapter;
             private boolean mUseFresco = true;
+            private String mDefaultUserAgent;
 
             public Builder setContext(Context context) {
                 mContext = context;
@@ -93,6 +103,11 @@ public class App {
 
             public Builder setBuildConfigAdapter(BuildConfigAdapter buildConfigAdapter) {
                 mBuildConfigAdapter = buildConfigAdapter;
+                return this;
+            }
+
+            public Builder setDefaultUserAgent(String defaultUserAgent) {
+                mDefaultUserAgent = defaultUserAgent;
                 return this;
             }
 
@@ -114,6 +129,11 @@ public class App {
                 config.mContext = this.mContext;
                 config.mBuildConfigAdapter = this.mBuildConfigAdapter;
                 config.mUseFresco = this.mUseFresco;
+
+                if (!TextUtils.isEmpty(this.mDefaultUserAgent)) {
+                    config.mDefaultUserAgent = this.mDefaultUserAgent;
+                }
+
                 return config;
             }
         }

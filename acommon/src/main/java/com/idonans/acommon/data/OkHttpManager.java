@@ -1,5 +1,7 @@
 package com.idonans.acommon.data;
 
+import android.text.TextUtils;
+
 import com.idonans.acommon.App;
 import com.idonans.acommon.lang.CommonLog;
 
@@ -31,6 +33,26 @@ public class OkHttpManager {
     private final OkHttpClient mOkHttpClient;
 
     private OkHttpManager() {
+        Interceptor defaultUserAgentInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                if (chain.request().header("User-Agent") != null) {
+                    return chain.proceed(chain.request());
+                }
+
+                String defaultUserAgent = App.getDefaultUserAgent();
+                if (TextUtils.isEmpty(defaultUserAgent)) {
+                    return chain.proceed(chain.request());
+                }
+
+                return chain.proceed(
+                        chain.request().newBuilder()
+                                .removeHeader("User-Agent")
+                                .addHeader("User-Agent", defaultUserAgent)
+                                .build());
+            }
+        };
+
         if (App.getBuildConfigAdapter().isDebug()) {
             CommonLog.d(TAG + " in debug mode, config OkHttpClient.");
 
@@ -48,11 +70,13 @@ public class OkHttpManager {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             mOkHttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(defaultUserAgentInterceptor)
                     .addInterceptor(contentEncodingInterceptor)
                     .addInterceptor(httpLoggingInterceptor)
                     .build();
         } else {
             mOkHttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(defaultUserAgentInterceptor)
                     .build();
         }
     }
