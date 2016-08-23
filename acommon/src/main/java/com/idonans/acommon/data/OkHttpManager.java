@@ -47,8 +47,7 @@ public class OkHttpManager {
 
                 return chain.proceed(
                         chain.request().newBuilder()
-                                .removeHeader("User-Agent")
-                                .addHeader("User-Agent", defaultUserAgent)
+                                .header("User-Agent", defaultUserAgent)
                                 .build());
             }
         };
@@ -60,8 +59,9 @@ public class OkHttpManager {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     CommonLog.d(TAG + " contentEncodingInterceptor intercept");
-                    Request request = chain.request().newBuilder().removeHeader("Accept-Encoding")
-                            .addHeader("Accept-Encoding", "identity").build();
+                    Request request = chain.request().newBuilder()
+                            .header("Accept-Encoding", "identity")
+                            .build();
                     return chain.proceed(request);
                 }
             };
