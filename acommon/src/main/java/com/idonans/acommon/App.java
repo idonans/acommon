@@ -16,6 +16,7 @@ public class App {
     private static BuildConfigAdapter sBuildConfigAdapter;
 
     private static String sDefaultUserAgent;
+    private static boolean sUse565Config;
 
     private static void init(Config config) {
         synchronized (App.class) {
@@ -32,6 +33,7 @@ public class App {
         AppContext.setContext(config.mContext);
         sBuildConfigAdapter = config.mBuildConfigAdapter;
         sDefaultUserAgent = config.mDefaultUserAgent;
+        sUse565Config = config.mUse565Config;
 
         CommonLog.setLogLevel(sBuildConfigAdapter.getLogLevel());
         CommonLog.setLogTag(sBuildConfigAdapter.getLogTag());
@@ -40,6 +42,10 @@ public class App {
         if (config.mUseFresco) {
             FrescoManager.getInstance();
         }
+    }
+
+    public static boolean isUse565Config() {
+        return sUse565Config;
     }
 
     public static String getDefaultUserAgent() {
@@ -80,6 +86,7 @@ public class App {
         private Context mContext;
         private BuildConfigAdapter mBuildConfigAdapter;
         private boolean mUseFresco;
+        private boolean mUse565Config;
         private String mDefaultUserAgent;
 
         private Config() {
@@ -94,6 +101,7 @@ public class App {
             private Context mContext;
             private BuildConfigAdapter mBuildConfigAdapter;
             private boolean mUseFresco = true;
+            private boolean mUse565Config;
             private String mDefaultUserAgent;
 
             public Builder setContext(Context context) {
@@ -116,6 +124,11 @@ public class App {
                 return this;
             }
 
+            public Builder setUse565Config(boolean use565Config) {
+                mUse565Config = use565Config;
+                return this;
+            }
+
             public Config build() {
                 if (mContext == null) {
                     throw new IllegalArgumentException("context not set");
@@ -129,6 +142,7 @@ public class App {
                 config.mContext = this.mContext;
                 config.mBuildConfigAdapter = this.mBuildConfigAdapter;
                 config.mUseFresco = this.mUseFresco;
+                config.mUse565Config = this.mUse565Config;
 
                 if (!TextUtils.isEmpty(this.mDefaultUserAgent)) {
                     config.mDefaultUserAgent = this.mDefaultUserAgent;

@@ -1,5 +1,7 @@
 package com.idonans.acommon.data;
 
+import android.graphics.Bitmap;
+
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.logging.FLog;
 import com.facebook.common.logging.FLogDefaultLoggingDelegate;
@@ -34,6 +36,11 @@ public class FrescoManager {
             frescoCacheBaseDir = FileUtil.getCacheDir();
         }
 
+        Bitmap.Config config = Bitmap.Config.ARGB_8888;
+        if (App.isUse565Config()) {
+            config = Bitmap.Config.RGB_565;
+        }
+
         ImagePipelineConfig imagePipelineConfig = ImagePipelineConfig.newBuilder(AppContext.getContext())
                 .setMainDiskCacheConfig(DiskCacheConfig.newBuilder(AppContext.getContext())
                         .setBaseDirectoryPath(frescoCacheBaseDir)
@@ -44,6 +51,7 @@ public class FrescoManager {
                         .setBaseDirectoryName("fresco_small_disk_" + ProcessManager.getInstance().getProcessTag())
                         .build())
                 .setNetworkFetcher(new OkHttpNetworkFetcher(OkHttpManager.getInstance().getOkHttpClient()))
+                .setBitmapsConfig(config)
                 .build();
 
         FLogDefaultLoggingDelegate fLogDefaultLoggingDelegate = FLogDefaultLoggingDelegate.getInstance();
