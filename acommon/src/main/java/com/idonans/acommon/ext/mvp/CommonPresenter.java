@@ -30,24 +30,6 @@ public abstract class CommonPresenter<V extends CommonView> implements Available
         });
     }
 
-    public final void onBackClick() {
-        runAfterInit(true, new Runnable() {
-            @Override
-            public void run() {
-                dispatchBackClick();
-            }
-        });
-    }
-
-    protected boolean dispatchBackClick() {
-        CommonView view = getView();
-        if (view == null) {
-            return false;
-        }
-
-        return view.dispatchBackClick();
-    }
-
     /**
      * 如果当前 presenter 未完成初始化，则会在初始化完成之后执行
      */
