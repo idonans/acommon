@@ -44,6 +44,9 @@ public class MainActivity extends CommonActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SystemUtil.setStatusBarTransparent(getWindow());
+
         setContentView(R.layout.activity_main);
 
         TextView text = ViewUtil.findViewByID(this, R.id.text);

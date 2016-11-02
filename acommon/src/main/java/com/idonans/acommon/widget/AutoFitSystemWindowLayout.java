@@ -44,21 +44,23 @@ public class AutoFitSystemWindowLayout extends FrameLayout {
             throw new IllegalArgumentException("id should set with R.id.acommon_auto_fit_system_window_content");
         }
         setId(R.id.acommon_auto_fit_system_window_content);
-        setFitsSystemWindows(true);
+        // setFitsSystemWindows(true);
     }
 
     @SuppressWarnings("deprecation")
     @Override
     protected final boolean fitSystemWindows(Rect insets) {
-        insets.set(0, 0, 0, insets.bottom);
-        return super.fitSystemWindows(insets);
+        return true;
+        // insets.set(0, 0, 0, insets.bottom);
+        // return super.fitSystemWindows(insets);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     @Override
     public final WindowInsets onApplyWindowInsets(WindowInsets insets) {
-        insets = insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom());
-        return super.onApplyWindowInsets(insets);
+        return insets.consumeSystemWindowInsets();
+        // insets = insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom());
+        // return super.onApplyWindowInsets(insets);
     }
 
 }
