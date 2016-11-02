@@ -191,12 +191,16 @@ public class SystemUtil {
     }
 
     public static void setStatusBarTransparent(Window window) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= 19) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         if (Build.VERSION.SDK_INT >= 21) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            // 发现：华为手机在 5.1 上的透明状态栏仍然使用的是 4.4 的效果，此处设置完全透明状态栏的 API 调整到最低 6.0
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
         setSystemUiFullStable(window.getDecorView());
