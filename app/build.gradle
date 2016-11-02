@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.idonans.acommon.demo"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 3
         versionName "1.0.3"
     }
