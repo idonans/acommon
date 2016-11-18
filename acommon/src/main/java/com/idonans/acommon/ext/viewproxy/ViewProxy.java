@@ -1,6 +1,8 @@
-package com.idonans.acommon.ext.mvp;
+package com.idonans.acommon.ext.viewproxy;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.UiThread;
+import android.support.annotation.WorkerThread;
 
 import com.idonans.acommon.lang.Available;
 import com.idonans.acommon.lang.TaskQueue;
@@ -11,16 +13,20 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * Created by idonans on 2016/7/21.
+ * <pre>
+ *     ViewProxyImpl mViewProxy = new ViewProxyImpl(this);
+ *     mViewProxy.start();
+ * </pre>
+ * <p>
+ * Created by idonans on 2016/11/18.
  */
-@Deprecated
-public abstract class CommonPresenter<V extends CommonView> implements Available, Closeable {
+public abstract class ViewProxy<VIEW> implements Available, Closeable {
 
     private final TaskQueue mQueue = new TaskQueue(1);
-    private V mView;
+    private VIEW mView;
     private boolean mInit;
 
-    public CommonPresenter(V view) {
+    public ViewProxy(VIEW view) {
         mView = view;
         enqueueRunnable(new Runnable() {
             @Override
@@ -30,6 +36,18 @@ public abstract class CommonPresenter<V extends CommonView> implements Available
             }
         });
     }
+
+    public void start() {
+        runAfterInit(true, new Runnable() {
+            @Override
+            public void run() {
+                onStart();
+            }
+        });
+    }
+
+    @UiThread
+    protected abstract void onStart();
 
     /**
      * 如果当前 presenter 未完成初始化，则会在初始化完成之后执行
@@ -68,13 +86,14 @@ public abstract class CommonPresenter<V extends CommonView> implements Available
         mQueue.enqueue(new Runnable() {
             @Override
             public void run() {
-                if (CommonPresenter.this.isAvailable() && AvailableUtil.isAvailable(runnable)) {
+                if (ViewProxy.this.isAvailable() && AvailableUtil.isAvailable(runnable)) {
                     runnable.run();
                 }
             }
         });
     }
 
+    @WorkerThread
     @CallSuper
     protected void onInitBackground() {
     }
@@ -82,7 +101,7 @@ public abstract class CommonPresenter<V extends CommonView> implements Available
     /**
      * if is not available, will return null.
      */
-    public V getView() {
+    public VIEW getView() {
         return isAvailable() ? mView : null;
     }
 
