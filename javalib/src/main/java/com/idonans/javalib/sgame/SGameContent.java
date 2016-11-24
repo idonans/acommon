@@ -32,7 +32,7 @@ public class SGameContent {
             mMap[i] = 0;
         }
 
-        mCell = new CellOnePoint(10, 0);
+        mCell = new CellLine4(10, 0);
     }
 
     public void dispatch(SGameEngine.Step step) {
@@ -218,6 +218,65 @@ public class SGameContent {
         @Override
         public Cell next() {
             return newInstance(getX(), getY(), getPointsCopy());
+        }
+
+    }
+
+    public static class CellLine4 extends DefaultMoveCell {
+
+        public CellLine4(int x, int y) {
+            this(x, y, new Point[]{
+                    new Point(0, 0),
+                    new Point(1, 0),
+                    new Point(2, 0),
+                    new Point(3, 0)
+            });
+        }
+
+        protected CellLine4(int x, int y, Point[] points) {
+            super(x, y, points);
+        }
+
+        @Override
+        protected DefaultMoveCell newInstance(int x, int y, Point[] points) {
+            return new CellLine4(x, y, points);
+        }
+
+        @Override
+        public Cell next() {
+            if (mPoints[1].x == 1) {
+                // 当前是水平的
+                int x = mX + 2;
+                int y = mY - 2;
+                if (y < 0) {
+                    y = 0;
+                }
+                if (y > MAP_HEIGHT - 4) {
+                    y = MAP_HEIGHT - 4;
+                }
+                return newInstance(x, y, new Point[]{
+                        new Point(0, 0),
+                        new Point(0, 1),
+                        new Point(0, 2),
+                        new Point(0, 3)
+                });
+            } else {
+                // 当前是垂直的
+                int x = mX - 2;
+                int y = mY + 2;
+                if (x < 0) {
+                    x = 0;
+                }
+                if (x > MAP_WIDTH - 4) {
+                    x = MAP_WIDTH - 4;
+                }
+                return newInstance(x, y, new Point[]{
+                        new Point(0, 0),
+                        new Point(1, 0),
+                        new Point(2, 0),
+                        new Point(3, 0)
+                });
+            }
         }
 
     }
