@@ -201,7 +201,17 @@ public class SGameContent {
     public static class CellOnePoint extends DefaultMoveCell {
 
         public CellOnePoint(int x, int y) {
-            this(x, y, new Point[]{new Point(0, 0)});
+            this(x, y, new Point[]{
+                    new Point(0, 0)
+                    , new Point(1, 0)
+                    , new Point(2, 0)
+                    , new Point(3, 0)
+                    , new Point(4, 0)
+                    , new Point(5, 0)
+                    , new Point(6, 0)
+                    , new Point(7, 0)
+                    , new Point(8, 0)
+            });
         }
 
         protected CellOnePoint(int x, int y, Point[] points) {

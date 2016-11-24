@@ -24,7 +24,7 @@ public class ActionPanel {
     private ActionPanel() {
         mPanel = new JPanel();
         WindowEnv windowEnv = WindowEnv.getInstance();
-        mPanel.setPreferredSize(new Dimension((int) windowEnv.getActionPanelWidth(), (int) windowEnv.getActionPanelHeight()));
+        mPanel.setPreferredSize(new Dimension(windowEnv.getActionPanelWidth(), windowEnv.getActionPanelHeight()));
         mPanel.setBackground(Color.DARK_GRAY);
     }
 

@@ -1,10 +1,12 @@
 package com.idonans.javalib.sgame;
 
 import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 /**
@@ -18,10 +20,10 @@ public class SGame {
     public SGame() {
         mRoot = new JFrame("SGame");
         mRoot.setResizable(false);
-        mRoot.setLayout(new FlowLayout(FlowLayout.CENTER, 1, 2));
+        mRoot.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         mRoot.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         WindowEnv windowEnv = WindowEnv.getInstance();
-        mRoot.setBounds((int) windowEnv.getOffsetX(), (int) windowEnv.getOffsetY(), (int) windowEnv.getWidth(), (int) windowEnv.getHeight());
+        mRoot.setBounds(windowEnv.getOffsetX(), windowEnv.getOffsetY(), windowEnv.getWidth(), windowEnv.getHeight());
 
         ActionPanel.getInstance().attachTo(mRoot);
         GamePanel.getInstance().attachTo(mRoot);
@@ -36,7 +38,17 @@ public class SGame {
     }
 
     public void start() {
-        mRoot.setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                mRoot.setVisible(true);
+
+                int width = mRoot.getWidth();
+                int height = mRoot.getHeight();
+                Insets insets = mRoot.getInsets();
+                mRoot.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
+            }
+        });
     }
 
 }

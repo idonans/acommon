@@ -2,6 +2,7 @@ package com.idonans.javalib.sgame;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
@@ -28,16 +29,11 @@ public class GamePanel {
 
     private GamePanel() {
         WindowEnv windowEnv = WindowEnv.getInstance();
-        mPanel = new Buffer((int) windowEnv.getGamePanelWidth(), (int) windowEnv.getGamePanelHeight());
+        mPanel = new Buffer(windowEnv.getGamePanelWidth(), windowEnv.getGamePanelHeight());
     }
 
     public void attachTo(JFrame parent) {
-        WindowEnv windowEnv = WindowEnv.getInstance();
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension((int) windowEnv.getGamePanelWidth() + 100, (int) windowEnv.getGamePanelHeight() + 100));
-        panel.setBackground(Color.BLACK);
-        parent.add(panel);
-        panel.add(mPanel);
+        parent.add(mPanel);
     }
 
     public void dispatchUpdate() {
@@ -63,6 +59,7 @@ public class GamePanel {
                     .createCompatibleImage(width, height);
             setPreferredSize(new Dimension(width, height));
             setBackground(Color.WHITE);
+            setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         }
 
         @Override

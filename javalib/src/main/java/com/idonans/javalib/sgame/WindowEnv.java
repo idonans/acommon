@@ -17,64 +17,68 @@ public class WindowEnv {
     }
 
     private final Toolkit mToolkit;
-    private double mWidth;
-    private double mHeight;
+    private int mWidth;
+    private int mHeight;
 
-    private double mActionPanelWidth;
-    private double mActionPanelHeight;
+    private int mActionPanelWidth;
+    private int mActionPanelHeight;
 
-    private double mGamePanelWidth;
-    private double mGamePanelHeight;
+    private int mGamePanelWidth;
+    private int mGamePanelHeight;
 
-    private double mOffsetX;
-    private double mOffsetY;
+    private int mOffsetX;
+    private int mOffsetY;
 
     private WindowEnv() {
         mToolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = mToolkit.getScreenSize();
 
-        mHeight = screenSize.getHeight() * 0.8;
-        mWidth = mHeight * 3 / 4.0;
+        mHeight = (int) (screenSize.getHeight() * 0.8);
+        mWidth = (int) (mHeight * 3 / 4.0);
+
+        mWidth = mWidth / SGameContent.MAP_WIDTH * SGameContent.MAP_WIDTH;
 
         mActionPanelWidth = mWidth;
-        mActionPanelHeight = mActionPanelWidth / 3.0;
+        mActionPanelHeight = (int) (mActionPanelWidth / 3.0);
+
+        mHeight = mWidth + mActionPanelHeight;
 
         mGamePanelWidth = mWidth;
-        mGamePanelHeight = mGamePanelWidth;
+        mGamePanelHeight = mWidth;
 
-        mOffsetX = (screenSize.getWidth() - mWidth) / 2.0;
-        mOffsetY = (screenSize.getHeight() - mHeight) / 2.0;
+        mOffsetX = (screenSize.width - mWidth) / 2;
+        mOffsetY = (screenSize.height - mHeight) / 2;
     }
 
-    public double getWidth() {
+    public int getWidth() {
         return mWidth;
     }
 
-    public double getHeight() {
+    public int getHeight() {
         return mHeight;
     }
 
-    public double getActionPanelWidth() {
+    public int getActionPanelWidth() {
         return mActionPanelWidth;
     }
 
-    public double getActionPanelHeight() {
+    public int getActionPanelHeight() {
         return mActionPanelHeight;
     }
 
-    public double getGamePanelWidth() {
+    public int getGamePanelWidth() {
         return mGamePanelWidth;
     }
 
-    public double getGamePanelHeight() {
+    public int getGamePanelHeight() {
         return mGamePanelHeight;
     }
 
-    public double getOffsetX() {
+    public int getOffsetX() {
         return mOffsetX;
     }
 
-    public double getOffsetY() {
+    public int getOffsetY() {
         return mOffsetY;
     }
 
