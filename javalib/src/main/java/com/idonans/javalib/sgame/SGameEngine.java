@@ -44,22 +44,29 @@ public class SGameEngine {
     public void switchStatus() {
         synchronized (STATUS_LOCK) {
             mStart = !mStart;
-            if (mStart) {
-                enqueueTask();
-            }
         }
     }
 
-    private void enqueueTask() {
-        mTaskQueue.enqueue(new Task());
+    private void enqueueTask(final KeyProcessor keyProcessor) {
+        mTaskQueue.enqueue(new Task(keyProcessor));
     }
 
+
     private class Task implements Runnable {
+
+        private final KeyProcessor mKeyProcessor;
+
+        private Task(KeyProcessor keyProcessor) {
+            mKeyProcessor = keyProcessor;
+        }
 
         @Override
         public void run() {
             try {
-                KeyProcessor keyProcessor = new KeyProcessor();
+                if (mKeyProcessor == null) {
+                    return;
+                }
+                boolean first = true;
                 while (true) {
                     synchronized (STATUS_LOCK) {
                         if (!mStart) {
@@ -67,13 +74,27 @@ public class SGameEngine {
                         }
                     }
 
-                    Step step = keyProcessor.next();
-                    SGameContent.getInstance().dispatch(step);
+                    // 确保至少执行一次
+                    Step step = mKeyProcessor.next();
+                    if (step != null) {
+                        SGameContent.getInstance().dispatch(step);
+                    } else {
+                        break;
+                    }
+
+                    if (mKeyProcessor.isChanged()) {
+                        break;
+                    }
 
                     try {
-                        Thread.sleep(20);
+                        Thread.sleep(first ? 300 : 150);
                     } catch (Throwable e) {
                         e.printStackTrace();
+                    }
+                    first = false;
+
+                    if (mKeyProcessor.isChanged()) {
+                        break;
                     }
                 }
             } catch (Throwable e) {
@@ -88,24 +109,30 @@ public class SGameEngine {
 
     private class CurrentKey {
 
-        private KeyEvent mKeyEvent;
-
         public void setKeyEvent(KeyEvent keyEvent) {
-            mKeyEvent = keyEvent;
-        }
-
-        public KeyEvent getKeyEvent() {
-            return mKeyEvent;
+            mKeyProcessor = new KeyProcessor(keyEvent);
+            enqueueTask(mKeyProcessor);
         }
 
     }
 
+    private KeyProcessor mKeyProcessor;
+
     private class KeyProcessor {
 
         private Step mLastStep;
+        private final KeyEvent mKeyEvent;
+
+        private KeyProcessor(KeyEvent keyEvent) {
+            mKeyEvent = keyEvent;
+        }
+
+        private boolean isChanged() {
+            return mKeyProcessor != this;
+        }
 
         public Step next() {
-            Step current = createStep(mCurrentKey.getKeyEvent());
+            Step current = createStep(mKeyEvent);
             if (current == null) {
                 mLastStep = null;
                 return null;
