@@ -48,6 +48,10 @@ public class GamePanel {
         private final int mCellHeight;
         private final BufferedImage mBufferedImage;
 
+        private final Color mBackgroundColor = Color.WHITE;
+        private final Color mFillColor = Color.GRAY;
+        private final Color mStrokeColor = Color.BLACK;
+
         private Buffer(int width, int height) {
             mWidth = width;
             mHeight = height;
@@ -71,12 +75,11 @@ public class GamePanel {
 
         private void drawBuffer() {
             Graphics2D g = mBufferedImage.createGraphics();
-            g.setBackground(Color.GREEN);
+            g.setBackground(mBackgroundColor);
             g.clearRect(0, 0, mWidth, mHeight);
 
             SGameContent content = SGameContent.getInstance();
 
-            g.setColor(Color.BLUE);
             SGameContent.Cell cell = content.getCell();
             if (cell != null) {
                 Point[] points = cell.getPoints();
@@ -86,7 +89,10 @@ public class GamePanel {
                     for (Point p : points) {
                         x = (p.x + cell.getX()) * mCellWidth;
                         y = (p.y + cell.getY()) * mCellHeight;
-                        g.drawRect(x, y, mCellWidth, mCellHeight);
+                        g.setColor(mFillColor);
+                        g.fillRect(x, y, mCellWidth - 1, mCellHeight - 1);
+                        g.setColor(mStrokeColor);
+                        g.drawRect(x, y, mCellWidth - 1, mCellHeight - 1);
                     }
                 }
             }
