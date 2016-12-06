@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.idonans.acommon.lang.Available;
 import com.idonans.acommon.lang.CommonLog;
+import com.idonans.acommon.util.SystemUtil;
 
 /**
  * 基类 Activity
@@ -15,9 +16,13 @@ public class CommonActivity extends AppCompatActivity implements Available {
 
     private boolean mAvailable;
     private boolean mPaused;
+    private boolean mTransparentStatusBar = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (mTransparentStatusBar) {
+            SystemUtil.setStatusBarTransparent(getWindow());
+        }
         super.onCreate(savedInstanceState);
 
         {
@@ -33,6 +38,33 @@ public class CommonActivity extends AppCompatActivity implements Available {
         }
 
         mAvailable = true;
+        showContent();
+    }
+
+    /**
+     * default is true, u can change to false but must call before onCreate()
+     * <pre>
+     *     protected void onCreate() {
+     *         setTransparentStatusBar(false);
+     *         super.onCreate();
+     *     }
+     *
+     *     protected void showContent() {
+     *         setContentView();
+     *         Button signIn = ViewUtil.findViewByID();
+     *     }
+     * </pre>
+     *
+     * @param transparentStatusBar
+     */
+    protected void setTransparentStatusBar(boolean transparentStatusBar) {
+        mTransparentStatusBar = transparentStatusBar;
+    }
+
+    /**
+     * override this to setContentView
+     */
+    protected void showContent() {
     }
 
     @Override
@@ -53,7 +85,7 @@ public class CommonActivity extends AppCompatActivity implements Available {
 
     @Override
     public void onBackPressed() {
-        if (!isPaused()) {
+        if (!isPaused() && isAvailable()) {
             super.onBackPressed();
         }
     }
