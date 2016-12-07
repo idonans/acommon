@@ -36,7 +36,7 @@ public class SplashViewImpl extends SimpleProxyFragment implements SplashView {
     @Override
     public void showContent() {
         super.showContent();
-        getLayoutInflater(null).inflate(R.layout.splash_content, getContentView(), true);
+        getActivity().getLayoutInflater().inflate(R.layout.splash_content, getContentView(), true);
 
         Fragment fragment = getChildFragmentManager().findFragmentById(R.id.start_navigation_container);
         if (fragment == null) {
