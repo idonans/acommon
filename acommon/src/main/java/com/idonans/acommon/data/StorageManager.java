@@ -4,8 +4,10 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.idonans.acommon.internal.db.SimpleDB;
+import com.idonans.acommon.internal.db.FastDB;
 import com.idonans.acommon.lang.CommonLog;
+import com.idonans.acommon.lang.ThreadPool;
+import com.idonans.acommon.util.HumanUtil;
 
 /**
  * 数据存储服务
@@ -28,18 +30,18 @@ public class StorageManager {
     }
 
     private static final String TAG = "StorageManager";
-    private final SimpleDB mDBSetting;
-    private final SimpleDB mDBCache;
+    private final FastDB mDBSetting;
+    private final FastDB mDBCache;
 
     private StorageManager() {
-        mDBSetting = new SimpleDB("setting");
-        mDBCache = new SimpleDB("cache");
+        mDBSetting = new FastDB("setting", false);
+        mDBCache = new FastDB("cache", true);
 
         // 数据库启动时, 做一次 trim 操作.
         int settingTrimSize = mDBSetting.trim(5000);
-        CommonLog.d(TAG + " setting trim size:" + settingTrimSize);
+        CommonLog.d(TAG + " setting trim size:" + settingTrimSize + ", max memory cache size:" + HumanUtil.getHumanSizeFromByte(mDBSetting.getMaxMemoryCacheSize()));
         int cacheTrimSize = mDBCache.trim(5000);
-        CommonLog.d(TAG + " cache trim size:" + cacheTrimSize);
+        CommonLog.d(TAG + " cache trim size:" + cacheTrimSize + ", max memory cache size:" + HumanUtil.getHumanSizeFromByte(mDBCache.getMaxMemoryCacheSize()));
     }
 
     public void setSetting(@Nullable String key, @Nullable String value) {
@@ -47,10 +49,16 @@ public class StorageManager {
     }
 
     @CheckResult
-    public String getSetting(@Nullable String key) {
+    public String getSetting(@Nullable final String key) {
         String value = mDBSetting.get(key);
         if (!TextUtils.isEmpty(value)) {
-            mDBSetting.touch(key);
+            // 异步处理
+            ThreadPool.getInstance().post(new Runnable() {
+                @Override
+                public void run() {
+                    mDBSetting.touch(key);
+                }
+            });
         }
         return value;
     }
@@ -60,10 +68,16 @@ public class StorageManager {
     }
 
     @CheckResult
-    public String getCache(@Nullable String key) {
+    public String getCache(@Nullable final String key) {
         String value = mDBCache.get(key);
         if (!TextUtils.isEmpty(value)) {
-            mDBCache.touch(key);
+            // 异步处理
+            ThreadPool.getInstance().post(new Runnable() {
+                @Override
+                public void run() {
+                    mDBCache.touch(key);
+                }
+            });
         }
         return value;
     }
