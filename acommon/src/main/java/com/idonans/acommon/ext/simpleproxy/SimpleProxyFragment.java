@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.idonans.acommon.R;
 import com.idonans.acommon.app.CommonFragment;
+import com.idonans.acommon.lang.CommonLog;
 import com.idonans.acommon.util.IOUtil;
 import com.idonans.acommon.util.ViewUtil;
 
@@ -35,6 +36,16 @@ public abstract class SimpleProxyFragment extends CommonFragment implements Simp
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (container == null) {
+            final String TAG = getClass().getSimpleName();
+            CommonLog.d(TAG + " onCreateView but container is null. savedInstanceState:" + savedInstanceState);
+        }
+
+        if (savedInstanceState != null) {
+            final String TAG = getClass().getSimpleName();
+            CommonLog.d(TAG + " onCreateView restore from savedInstanceState:" + savedInstanceState + ", with container:" + container);
+        }
+
         View view = inflater.inflate(R.layout.acommon_simple_proxy_fragment, container, false);
 
         boolean hasStatusBarPadding = getArguments().getBoolean(EXTRA_STATUS_BAR_PADDING, false);
