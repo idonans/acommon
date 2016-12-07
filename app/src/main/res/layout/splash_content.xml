@@ -6,4 +6,8 @@
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="hello splash"/>
+    <LinearLayout android:id="@+id/start_navigation_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
 </LinearLayout>

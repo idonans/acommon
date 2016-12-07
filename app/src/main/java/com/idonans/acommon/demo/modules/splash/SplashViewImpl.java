@@ -1,8 +1,11 @@
 package com.idonans.acommon.demo.modules.splash;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 
 import com.idonans.acommon.demo.R;
+import com.idonans.acommon.demo.modules.startnavigation.StartNavigationViewImpl;
 import com.idonans.acommon.ext.simpleproxy.SimpleProxy;
 import com.idonans.acommon.ext.simpleproxy.SimpleProxyFragment;
 
@@ -21,6 +24,11 @@ public class SplashViewImpl extends SimpleProxyFragment implements SplashView {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(null);
+    }
+
+    @Override
     protected SimpleProxy onCreateSimpleProxy() {
         return new SplashProxy(this);
     }
@@ -29,6 +37,17 @@ public class SplashViewImpl extends SimpleProxyFragment implements SplashView {
     public void showContent() {
         super.showContent();
         getLayoutInflater(null).inflate(R.layout.splash_content, getContentView(), true);
+
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.start_navigation_container);
+        if (fragment == null) {
+            getChildFragmentManager().beginTransaction().add(R.id.start_navigation_container, StartNavigationViewImpl.newInstance()).commitNowAllowingStateLoss();
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
 }
