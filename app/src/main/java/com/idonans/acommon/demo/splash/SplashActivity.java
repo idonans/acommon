@@ -1,5 +1,6 @@
 package com.idonans.acommon.demo.splash;
 
+import com.idonans.acommon.demo.modules.splash.SplashViewImpl;
 import com.idonans.acommon.ext.simpleproxy.SimpleProxyActivity;
 import com.idonans.acommon.ext.simpleproxy.SimpleProxyFragment;
 
@@ -11,7 +12,7 @@ public class SplashActivity extends SimpleProxyActivity {
 
     @Override
     protected SimpleProxyFragment createSimpleProxyFragment() {
-        return SplashFragment.newInstance();
+        return SplashViewImpl.newInstance();
     }
 
 }

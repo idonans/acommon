@@ -26,6 +26,11 @@ public abstract class SimpleProxyActivity extends CommonActivity {
         }
     }
 
+    @Override
+    protected void showContent() {
+        setContentView(R.layout.acommon_simple_proxy_activity);
+    }
+
     private void showFragmentWithReplace(CommonFragment fragment) {
         if (!isAvailable()) {
             return;

@@ -38,6 +38,7 @@ public abstract class ViewProxy<VIEW> implements Available, Closeable {
     }
 
     public void start() {
+        onLoading();
         runAfterInit(true, new Runnable() {
             @Override
             public void run() {
@@ -45,6 +46,9 @@ public abstract class ViewProxy<VIEW> implements Available, Closeable {
             }
         });
     }
+
+    @UiThread
+    protected abstract void onLoading();
 
     @UiThread
     protected abstract void onStart();

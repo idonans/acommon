@@ -2,73 +2,109 @@ package com.idonans.acommon.ext.simpleproxy;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.idonans.acommon.R;
 import com.idonans.acommon.app.CommonFragment;
+import com.idonans.acommon.util.IOUtil;
+import com.idonans.acommon.util.ViewUtil;
 
 /**
  * Created by idonans on 2016/11/21.
  */
 
-public abstract class SimpleProxyFragment<DATA> extends CommonFragment {
+public abstract class SimpleProxyFragment extends CommonFragment implements SimpleProxyView {
 
-    private DATA mData;
+    private static final String EXTRA_STATUS_BAR_PADDING = "status_bar_padding";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(null);
-        mData = onCreateData(savedInstanceState);
+        super.onCreate(savedInstanceState);
     }
 
-    protected abstract DATA onCreateData(@Nullable Bundle savedInstanceState);
-
-    protected abstract void onSaveData(Bundle outState);
-
-    protected boolean needShowLoading() {
-        return true;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        onSaveData(outState);
+    public void setStatusBarPadding(boolean statusBarPadding) {
+        Bundle args = getArguments();
+        args.putBoolean(EXTRA_STATUS_BAR_PADDING, statusBarPadding);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.acommon_simple_proxy_fragment, container, false);
+        View view = inflater.inflate(R.layout.acommon_simple_proxy_fragment, container, false);
+
+        boolean hasStatusBarPadding = getArguments().getBoolean(EXTRA_STATUS_BAR_PADDING, false);
+        if (hasStatusBarPadding) {
+            view.setPadding(0, getResources().getDimensionPixelOffset(R.dimen.acommon_status_bar_height), 0, 0);
+        }
+
+        return view;
+    }
+
+    private FrameLayout mContentView;
+
+    public void setContentView(FrameLayout contentView) {
+        mContentView = contentView;
+    }
+
+    public FrameLayout getContentView() {
+        return mContentView;
+    }
+
+    private SimpleProxy mSimpleProxy;
+
+    public SimpleProxy getSimpleProxy() {
+        return mSimpleProxy;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (needShowLoading()) {
-            showFragmentWithReplace(createLoadingFragment());
-        } else {
-            showFragmentWithReplace(createContentFragment());
+        FrameLayout content = ViewUtil.findViewByID(view, R.id.acommon_simple_proxy_fragment_content);
+        setContentView(content);
+
+        SimpleProxy simpleProxy = onCreateSimpleProxy();
+        mSimpleProxy = simpleProxy;
+        mSimpleProxy.start();
+    }
+
+    protected SimpleProxy onCreateSimpleProxy() {
+        return new SimpleProxy(this);
+    }
+
+    @Override
+    public void showLoading() {
+        FrameLayout contentView = getContentView();
+        if (contentView != null) {
+            contentView.removeAllViews();
+
+            ContentLoadingProgressBar loadingView = new ContentLoadingProgressBar(getActivity());
+            loadingView.setVisibility(View.GONE);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER;
+            contentView.addView(loadingView, layoutParams);
+            loadingView.show();
         }
     }
 
-    void showFragmentWithReplace(CommonFragment fragment) {
-        if (!isAvailable()) {
-            return;
+    @Override
+    public void showContent() {
+        FrameLayout contentView = getContentView();
+        if (contentView != null) {
+            contentView.removeAllViews();
         }
-        getChildFragmentManager().beginTransaction().replace(R.id.acommon_simple_proxy_fragment_content, fragment).commitNowAllowingStateLoss();
     }
 
-    void notifyLoadingFinished() {
-        showFragmentWithReplace(createContentFragment());
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mContentView = null;
+        IOUtil.closeQuietly(mSimpleProxy);
     }
-
-    DATA getData() {
-        return mData;
-    }
-
-    protected abstract SimpleProxyFragmentLoading<DATA> createLoadingFragment();
-
-    protected abstract SimpleProxyFragmentContent<DATA> createContentFragment();
 
 }
