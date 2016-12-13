@@ -8,7 +8,7 @@
         android:supportsRtl="true"
         android:theme="@style/MainAppTheme">
         <activity android:name="com.idonans.acommon.demo.splash.SplashActivity"
-            android:screenOrientation="sensorLandscape"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
