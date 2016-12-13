@@ -3,7 +3,6 @@ package com.idonans.acommon.ext.simpleproxy;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,13 +91,9 @@ public abstract class SimpleProxyFragment extends CommonFragment implements Simp
         if (contentView != null) {
             contentView.removeAllViews();
 
-            ContentLoadingProgressBar loadingView = new ContentLoadingProgressBar(getActivity());
-            loadingView.setVisibility(View.GONE);
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER;
-            contentView.addView(loadingView, layoutParams);
+            View view = getActivity().getLayoutInflater().inflate(R.layout.acommon_simple_proxy_loading, contentView, false);
+            ContentLoadingProgressBar loadingView = ViewUtil.findViewByID(view, R.id.acommon_simple_proxy_loading);
+            contentView.addView(view);
             loadingView.show();
         }
     }
