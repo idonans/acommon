@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.idonans.acommon.App;
 import com.idonans.acommon.lang.Available;
 import com.idonans.acommon.lang.CommonLog;
 import com.idonans.acommon.util.SystemUtil;
@@ -18,8 +19,18 @@ public class CommonActivity extends AppCompatActivity implements Available {
     private boolean mPaused;
     private boolean mTransparentStatusBar = true;
 
+    private final String DEBUG_TAG = getClass().getName();
+
+    private boolean isDebug() {
+        return App.getBuildConfigAdapter().isDebug();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onCreate");
+        }
+
         if (mTransparentStatusBar) {
             SystemUtil.setStatusBarTransparent(getWindow());
         }
@@ -68,13 +79,56 @@ public class CommonActivity extends AppCompatActivity implements Available {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onNewIntent");
+        }
+
+        super.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onRestart() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onStart");
+        }
+
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onStart");
+        }
+
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onStop");
+        }
+        super.onStop();
+    }
+
+    @Override
     protected void onPause() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onPause");
+        }
+
         super.onPause();
         mPaused = true;
     }
 
     @Override
     protected void onResume() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onResume");
+        }
+
         super.onResume();
         mPaused = false;
     }
@@ -92,6 +146,10 @@ public class CommonActivity extends AppCompatActivity implements Available {
 
     @Override
     protected void onDestroy() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onDestroy");
+        }
+
         super.onDestroy();
         mAvailable = false;
     }
