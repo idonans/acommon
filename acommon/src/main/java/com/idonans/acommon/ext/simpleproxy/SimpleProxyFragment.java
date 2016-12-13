@@ -73,12 +73,16 @@ public abstract class SimpleProxyFragment extends CommonFragment implements Simp
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        FrameLayout content = ViewUtil.findViewByID(view, R.id.acommon_simple_proxy_fragment_content);
-        setContentView(content);
+        initContentView(view);
 
         SimpleProxy simpleProxy = onCreateSimpleProxy();
         mSimpleProxy = simpleProxy;
         mSimpleProxy.start();
+    }
+
+    protected void initContentView(View view) {
+        FrameLayout content = ViewUtil.findViewByID(view, R.id.acommon_simple_proxy_fragment_content);
+        setContentView(content);
     }
 
     protected SimpleProxy onCreateSimpleProxy() {
