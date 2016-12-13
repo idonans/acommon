@@ -15,7 +15,6 @@ import com.idonans.acommon.lang.CommonLog;
 public class CommonFragment extends Fragment implements Available {
 
     private boolean mAvailable;
-    private boolean mPaused;
 
     private final String DEBUG_TAG = getClass().getName();
 
@@ -33,32 +32,12 @@ public class CommonFragment extends Fragment implements Available {
     }
 
     @Override
-    public void onStop() {
-        if (isDebug()) {
-            CommonLog.d(DEBUG_TAG + " onStop");
-        }
-
-        super.onStop();
-    }
-
-    @Override
     public void onPause() {
         if (isDebug()) {
             CommonLog.d(DEBUG_TAG + " onPause");
         }
 
         super.onPause();
-        mPaused = true;
-    }
-
-    @Override
-    public void onResume() {
-        if (isDebug()) {
-            CommonLog.d(DEBUG_TAG + " onResume");
-        }
-
-        super.onResume();
-        mPaused = false;
     }
 
     @Override
@@ -81,10 +60,6 @@ public class CommonFragment extends Fragment implements Available {
         mAvailable = false;
     }
 
-    public boolean isPaused() {
-        return mPaused;
-    }
-
     @Override
     public boolean isAvailable() {
         return mAvailable;
@@ -98,6 +73,24 @@ public class CommonFragment extends Fragment implements Available {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onStop() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onStop");
+        }
+
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        if (isDebug()) {
+            CommonLog.d(DEBUG_TAG + " onResume");
+        }
+
+        super.onResume();
     }
 
 }

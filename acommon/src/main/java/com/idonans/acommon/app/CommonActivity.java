@@ -16,7 +16,7 @@ import com.idonans.acommon.util.SystemUtil;
 public class CommonActivity extends AppCompatActivity implements Available {
 
     private boolean mAvailable;
-    private boolean mPaused;
+    private boolean mResumed;
     private boolean mTransparentStatusBar = true;
 
     private final String DEBUG_TAG = getClass().getName();
@@ -120,7 +120,7 @@ public class CommonActivity extends AppCompatActivity implements Available {
         }
 
         super.onPause();
-        mPaused = true;
+        mResumed = false;
     }
 
     @Override
@@ -130,16 +130,16 @@ public class CommonActivity extends AppCompatActivity implements Available {
         }
 
         super.onResume();
-        mPaused = false;
+        mResumed = true;
     }
 
-    public boolean isPaused() {
-        return mPaused;
+    public boolean isResumed() {
+        return mResumed;
     }
 
     @Override
     public void onBackPressed() {
-        if (!isPaused() && isAvailable()) {
+        if (isResumed()) {
             super.onBackPressed();
         }
     }
