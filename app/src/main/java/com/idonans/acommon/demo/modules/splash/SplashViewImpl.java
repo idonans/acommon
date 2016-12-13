@@ -36,18 +36,13 @@ public class SplashViewImpl extends SimpleProxyFragment implements SplashView {
     @Override
     public void showContent() {
         super.showContent();
+
         getActivity().getLayoutInflater().inflate(R.layout.splash_content, getContentView(), true);
 
         Fragment fragment = getChildFragmentManager().findFragmentById(R.id.start_navigation_container);
         if (fragment == null) {
             getChildFragmentManager().beginTransaction().add(R.id.start_navigation_container, StartNavigationViewImpl.newInstance()).commitNowAllowingStateLoss();
         }
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
 }
