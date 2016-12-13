@@ -133,13 +133,13 @@ public class CommonActivity extends AppCompatActivity implements Available {
         mResumed = true;
     }
 
-    public boolean isResumed() {
+    public boolean isAppCompatResumed() {
         return mResumed;
     }
 
     @Override
     public void onBackPressed() {
-        if (isResumed()) {
+        if (isAppCompatResumed()) {
             super.onBackPressed();
         }
     }

@@ -15,6 +15,7 @@ import com.idonans.acommon.lang.CommonLog;
 public class CommonFragment extends Fragment implements Available {
 
     private boolean mAvailable;
+    private boolean mResumed;
 
     private final String DEBUG_TAG = getClass().getName();
 
@@ -38,6 +39,7 @@ public class CommonFragment extends Fragment implements Available {
         }
 
         super.onPause();
+        mResumed = false;
     }
 
     @Override
@@ -91,6 +93,11 @@ public class CommonFragment extends Fragment implements Available {
         }
 
         super.onResume();
+        mResumed = true;
+    }
+
+    public boolean isAppCompatResumed() {
+        return mResumed;
     }
 
 }
