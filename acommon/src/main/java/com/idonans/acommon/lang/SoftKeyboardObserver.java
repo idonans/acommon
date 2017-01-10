@@ -111,6 +111,8 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
 
     @Override
     public void onGlobalLayout() {
+        CommonLog.d(TAG + " onGlobalLayout");
+
         if (isHostAvailable()) {
             if (mHost.isSoftKeyboardShown()) {
                 onSoftKeyboardOpen();

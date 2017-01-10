@@ -5,15 +5,16 @@ import android.widget.TextView;
 
 import com.idonans.acommon.demo.R;
 import com.idonans.acommon.demo.app.BaseActivity;
-import com.idonans.acommon.util.SystemUtil;
+import com.idonans.acommon.lang.SoftKeyboardObserver;
 import com.idonans.acommon.util.ViewUtil;
 
 /**
  * Created by idonans on 2016/11/21.
  */
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements SoftKeyboardObserver.SoftKeyboardListener {
 
+    private SoftKeyboardObserver mSoftKeyboardObserver;
     private TextView mMessageShow;
 
     @Override
@@ -25,29 +26,39 @@ public class SplashActivity extends BaseActivity {
 
         setContentView(R.layout.splash_activity);
 
+        mSoftKeyboardObserver = new SoftKeyboardObserver(this);
         mMessageShow = ViewUtil.findViewByID(this, R.id.message_show);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isAvailable()) {
-            return;
-        }
 
-        mMessageShow.postOnAnimation(new Runnable() {
-            @Override
-            public void run() {
-                syncSoftKeyboardStatus();
-            }
-        });
+        if (mSoftKeyboardObserver != null) {
+            mSoftKeyboardObserver.register(this);
+        }
     }
 
-    private void syncSoftKeyboardStatus() {
-        if (SystemUtil.isSoftKeyboardShown(this)) {
-            mMessageShow.setText("soft keyboard is shown");
-        } else {
-            mMessageShow.setText("soft keyboard is hidden");
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (mSoftKeyboardObserver != null) {
+            mSoftKeyboardObserver.unregister();
+        }
+    }
+
+    @Override
+    public void onSoftKeyboardOpen() {
+        if (mMessageShow != null) {
+            mMessageShow.setText("soft keyboard is open");
+        }
+    }
+
+    @Override
+    public void onSoftKeyboardClose() {
+        if (mMessageShow != null) {
+            mMessageShow.setText("soft keyboard is closed");
         }
     }
 
