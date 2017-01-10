@@ -25,6 +25,23 @@ public class CommonActivity extends AppCompatActivity implements Available {
         return App.getBuildConfigAdapter().isDebug();
     }
 
+    /**
+     * the best way u should always check available status,
+     * if false, means this activity will be finished soon.
+     * <pre>
+     *     protected void onCreate() {
+     *         super.onCreate();
+     *
+     *         if (!isAvailable()) {
+     *             return;
+     *         }
+     *
+     *         setContentView();
+     *     }
+     * </pre>
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (isDebug()) {
@@ -49,7 +66,6 @@ public class CommonActivity extends AppCompatActivity implements Available {
         }
 
         mAvailable = true;
-        showContent();
     }
 
     /**
@@ -58,11 +74,12 @@ public class CommonActivity extends AppCompatActivity implements Available {
      *     protected void onCreate() {
      *         setTransparentStatusBar(false);
      *         super.onCreate();
-     *     }
      *
-     *     protected void showContent() {
+     *         if (!isAvailable()) {
+     *             return;
+     *         }
+     *
      *         setContentView();
-     *         Button signIn = ViewUtil.findViewByID();
      *     }
      * </pre>
      *
@@ -70,12 +87,6 @@ public class CommonActivity extends AppCompatActivity implements Available {
      */
     protected void setTransparentStatusBar(boolean transparentStatusBar) {
         mTransparentStatusBar = transparentStatusBar;
-    }
-
-    /**
-     * override this to setContentView
-     */
-    protected void showContent() {
     }
 
     @Override

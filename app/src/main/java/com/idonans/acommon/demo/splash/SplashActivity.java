@@ -1,18 +1,24 @@
 package com.idonans.acommon.demo.splash;
 
-import com.idonans.acommon.demo.modules.splash.SplashViewImpl;
-import com.idonans.acommon.ext.simpleproxy.SimpleProxyActivity;
-import com.idonans.acommon.ext.simpleproxy.SimpleProxyFragment;
+import android.os.Bundle;
+
+import com.idonans.acommon.demo.R;
+import com.idonans.acommon.demo.app.BaseActivity;
 
 /**
  * Created by idonans on 2016/11/21.
  */
 
-public class SplashActivity extends SimpleProxyActivity {
+public class SplashActivity extends BaseActivity {
 
     @Override
-    protected SimpleProxyFragment createSimpleProxyFragment() {
-        return SplashViewImpl.newInstance();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!isAvailable()) {
+            return;
+        }
+
+        setContentView(R.layout.splash_activity);
     }
 
 }

@@ -13,24 +13,24 @@ import com.idonans.acommon.R;
 /**
  * Created by idonans on 2016/7/21.
  */
-public class AutoFitSystemWindowLayout extends FrameLayout {
+public class AcommonContentView extends FrameLayout {
 
-    public AutoFitSystemWindowLayout(Context context) {
+    public AcommonContentView(Context context) {
         super(context);
     }
 
-    public AutoFitSystemWindowLayout(Context context, AttributeSet attrs) {
+    public AcommonContentView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public AutoFitSystemWindowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AcommonContentView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AutoFitSystemWindowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AcommonContentView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -40,25 +40,29 @@ public class AutoFitSystemWindowLayout extends FrameLayout {
             return;
         }
 
-        if (getId() != NO_ID && getId() != R.id.acommon_auto_fit_system_window_content) {
-            throw new IllegalArgumentException("id should set with R.id.acommon_auto_fit_system_window_content");
+        if (getId() != NO_ID && getId() != R.id.acommon_content) {
+            throw new IllegalArgumentException("id should set with R.id.acommon_content");
         }
-        setId(R.id.acommon_auto_fit_system_window_content);
+        setId(R.id.acommon_content);
         setFitsSystemWindows(true);
     }
 
     @SuppressWarnings("deprecation")
     @Override
     protected final boolean fitSystemWindows(Rect insets) {
-        insets.set(0, 0, 0, insets.bottom);
+        insets.top = 0;
         return super.fitSystemWindows(insets);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     @Override
-    public final WindowInsets onApplyWindowInsets(WindowInsets insets) {
-        insets = insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom());
-        return super.onApplyWindowInsets(insets);
+    public WindowInsets dispatchApplyWindowInsets(WindowInsets insets) {
+        insets = insets.replaceSystemWindowInsets(
+                insets.getSystemWindowInsetLeft(),
+                0,
+                insets.getSystemWindowInsetRight(),
+                insets.getSystemWindowInsetBottom());
+        return super.dispatchApplyWindowInsets(insets);
     }
 
 }
