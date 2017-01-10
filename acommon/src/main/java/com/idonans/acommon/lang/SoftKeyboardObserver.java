@@ -124,7 +124,8 @@ public class SoftKeyboardObserver implements ViewTreeObserver.OnGlobalLayoutList
 
     private void checkWindowSoftInputMode(@NonNull Activity activity) {
         if (activity.getWindow() != null) {
-            if ((activity.getWindow().getAttributes().softInputMode & WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) == 0) {
+            if ((activity.getWindow().getAttributes().softInputMode & WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                    != WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) {
                 throw new IllegalArgumentException("softInputMode is not adjustResize " + activity.getClass().getName() + "@" + activity.hashCode());
             }
         }
