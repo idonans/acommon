@@ -35,14 +35,14 @@ public class SplashActivity extends BaseActivity implements SoftKeyboardObserver
         mSetFullscreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemUtil.hideStatusBar(v);
+                SystemUtil.setFullscreenWithSystemUi(v);
             }
         });
         mUnsetFullscreen = ViewUtil.findViewByID(this, R.id.unset_fullscreen);
         mUnsetFullscreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemUtil.showStatusBar(v);
+                SystemUtil.unsetFullscreenWithSystemUi(v);
             }
         });
     }

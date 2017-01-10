@@ -167,34 +167,24 @@ public class SystemUtil {
     }
 
     /**
-     * 注意：在 4.4 (不含)以下的系统中，隐藏状态栏之后，如果页面上有输入框，当软键盘弹出时，不会自动恢复显示 status bar 内容, 同时会使得软键盘状态监听失效.
-     * 在 4.4 (含)以上的系统中, 当软键盘弹出时，会自动显示隐藏的状态栏，软键盘监听逻辑也同样有效。
-     *
-     * @param view
-     * @see #isSoftKeyboardShown(View)
-     * @see #hideStatusBarOnKitkat(View)
+     * 注意：全屏模式下，软键盘监听将失效
+     * <p>
+     * 设置全屏
      */
-    public static void hideStatusBar(View view) {
+    public static void setFullscreenWithSystemUi(View view) {
         view.getRootView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-    public static void hideStatusBarOnKitkat(View view) {
-        if (Build.VERSION.SDK_INT >= 19) {
-            hideStatusBar(view);
-        }
-    }
-
-    public static void showStatusBar(View view) {
+    /**
+     * 取消全屏设置
+     */
+    public static void unsetFullscreenWithSystemUi(View view) {
         view.getRootView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
-
-    public static void setSystemUiFullStable(View view) {
-        showStatusBar(view);
     }
 
     public static void setStatusBarTransparent(Window window) {
@@ -210,7 +200,7 @@ public class SystemUtil {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-        setSystemUiFullStable(window.getDecorView());
+        unsetFullscreenWithSystemUi(window.getDecorView());
     }
 
     @CheckResult
