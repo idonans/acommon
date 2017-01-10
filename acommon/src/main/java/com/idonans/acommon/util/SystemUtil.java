@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.idonans.acommon.App;
 import com.idonans.acommon.AppContext;
 import com.idonans.acommon.R;
 import com.idonans.acommon.data.AppIDManager;
@@ -137,21 +138,27 @@ public class SystemUtil {
             return false;
         }
 
-        View autoFitSystemWindowContent = contentView.findViewById(R.id.acommon_auto_fit_system_window_content);
-        if (autoFitSystemWindowContent != null) {
-            contentView = autoFitSystemWindowContent;
+        View acommonContent = contentView.findViewById(R.id.acommon_content);
+        if (acommonContent != null) {
+            contentView = acommonContent;
         }
 
         int softKeyboardHeight = DimenUtil.dp2px(100);
 
-        StringBuilder builder = new StringBuilder();
-        builder.append(TAG + " isSoftKeyboardShown");
-        builder.append("\nrootView " + rootView.getClass().getName() + ", bottom:" + rootView.getBottom() + ", padding:" + getPadding(rootView));
-        builder.append("\ncontentView " + contentView.getClass().getName() + ", bottom:" + contentView.getBottom() + ", padding:" + getPadding(contentView));
-        builder.append("\nsoftKeyboardHeight:" + softKeyboardHeight);
-        CommonLog.d(builder);
+        if (App.getBuildConfigAdapter().isDebug()) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(TAG + " isSoftKeyboardShown");
+            builder.append("\nrootView " + rootView.getClass().getName() + ", bottom:" + rootView.getBottom() + ", padding:" + getPadding(rootView));
+            builder.append("\ncontentView " + contentView.getClass().getName() + ", bottom:" + contentView.getBottom() + ", padding:" + getPadding(contentView));
+            builder.append("\nsoftKeyboardHeight:" + softKeyboardHeight);
+            CommonLog.d(builder);
+        }
 
-        return rootView.getBottom() - (contentView.getBottom() - contentView.getPaddingBottom()) > softKeyboardHeight;
+        if (contentView.getPaddingBottom() > softKeyboardHeight) {
+            return true;
+        }
+
+        return rootView.getBottom() - contentView.getBottom() > softKeyboardHeight;
     }
 
     private static String getPadding(View view) {
