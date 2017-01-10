@@ -1,11 +1,13 @@
 package com.idonans.acommon.demo.splash;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.idonans.acommon.demo.R;
 import com.idonans.acommon.demo.app.BaseActivity;
 import com.idonans.acommon.lang.SoftKeyboardObserver;
+import com.idonans.acommon.util.SystemUtil;
 import com.idonans.acommon.util.ViewUtil;
 
 /**
@@ -16,6 +18,7 @@ public class SplashActivity extends BaseActivity implements SoftKeyboardObserver
 
     private SoftKeyboardObserver mSoftKeyboardObserver;
     private TextView mMessageShow;
+    private View mSetFullscreen, mUnsetFullscreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,20 @@ public class SplashActivity extends BaseActivity implements SoftKeyboardObserver
 
         mSoftKeyboardObserver = new SoftKeyboardObserver(this);
         mMessageShow = ViewUtil.findViewByID(this, R.id.message_show);
+        mSetFullscreen = ViewUtil.findViewByID(this, R.id.set_fullscreen);
+        mSetFullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemUtil.hideStatusBar(v);
+            }
+        });
+        mUnsetFullscreen = ViewUtil.findViewByID(this, R.id.unset_fullscreen);
+        mUnsetFullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemUtil.showStatusBar(v);
+            }
+        });
     }
 
     @Override

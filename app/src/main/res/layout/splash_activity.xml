@@ -15,6 +15,14 @@
         <EditText android:id="@+id/edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <Button android:id="@+id/set_fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="set fullscreen"/>
+        <Button android:id="@+id/unset_fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="unset fullscreen"/>
     </LinearLayout>
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
