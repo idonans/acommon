@@ -31,7 +31,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isAvailable()) {
+        if (!isAvailable()) {
             return;
         }
 
