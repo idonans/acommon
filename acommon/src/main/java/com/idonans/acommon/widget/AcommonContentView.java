@@ -36,10 +36,6 @@ public class AcommonContentView extends FrameLayout {
     }
 
     private void init() {
-        if (isInEditMode()) {
-            return;
-        }
-
         if (getId() != NO_ID && getId() != R.id.acommon_content) {
             throw new IllegalArgumentException("id should set with R.id.acommon_content");
         }
