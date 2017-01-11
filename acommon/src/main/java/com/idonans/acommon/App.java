@@ -19,14 +19,16 @@ public class App {
     private static boolean sUse565Config;
 
     private static void init(Config config) {
+        if (sInitCalled) {
+            return;
+        }
         synchronized (App.class) {
             if (sInitCalled) {
                 return;
             }
+            internalInit(config);
             sInitCalled = true;
         }
-
-        internalInit(config);
     }
 
     private static void internalInit(Config config) {
