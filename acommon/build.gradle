@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = rootProject.ext.versionName
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -46,6 +44,7 @@ dependencies {
 def siteUrl = 'https://github.com/idonans/acommon'      // 项目的主页
 def gitUrl = 'https://github.com/idonans/acommon.git'   // Git 仓库的 url
 group = "com.idonans.acommon"                           // Maven Group ID
+version = rootProject.ext.versionName
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
