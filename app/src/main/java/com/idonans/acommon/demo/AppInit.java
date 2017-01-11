@@ -4,9 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.idonans.acommon.App;
-import com.idonans.acommon.data.ProcessManager;
-import com.idonans.acommon.lang.CommonLog;
-import com.idonans.acommon.util.SystemUtil;
 
 /**
  * Created by idonans on 2016/11/18.
@@ -29,10 +26,6 @@ public final class AppInit {
                         .setContext(context)
                         .setBuildConfigAdapter(new BuildConfigAdapterImpl())
                         .build().init();
-                if (App.getBuildConfigAdapter().isDebug()) {
-                    CommonLog.d(TAG + " process init appId:" + SystemUtil.getAppID() +
-                            " main process:" + ProcessManager.getInstance().isMainProcess());
-                }
                 sInit = true;
             }
         }

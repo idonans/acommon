@@ -24,6 +24,7 @@ public class AppIDManager {
         return InstanceHolder.sInstance;
     }
 
+    private static final String TAG = "AppIDManager";
     private static final String KEY_APP_ID = "_app_id";
     private String mAppID;
 
@@ -34,7 +35,10 @@ public class AppIDManager {
             StorageManager.getInstance().setSetting(KEY_APP_ID, mAppID);
         }
 
-        CommonLog.d("App ID:" + mAppID);
+        CommonLog.d(TAG + " AppID:" + mAppID);
+        if (!ProcessManager.getInstance().isMainProcess()) {
+            CommonLog.e(TAG + " AppID:" + mAppID + " should be call from main process, different process will get different AppID.");
+        }
     }
 
     public String getAppID() {
