@@ -9,4 +9,8 @@
         <bitmap android:gravity="center_horizontal|top"
             android:src="@drawable/ic_splash_logo"/>
     </item>
+    <item>
+        <bitmap android:gravity="bottom|center_horizontal"
+            android:src="@drawable/ic_splash_logo"/>
+    </item>
 </layer-list>
