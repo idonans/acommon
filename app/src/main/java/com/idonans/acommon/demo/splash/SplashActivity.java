@@ -1,7 +1,5 @@
 package com.idonans.acommon.demo.splash;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.idonans.acommon.demo.R;
@@ -14,12 +12,6 @@ import com.idonans.acommon.util.SystemUtil;
 
 public class SplashActivity extends BaseActivity {
 
-    public static Intent startIntent(Context context) {
-        Intent starter = new Intent(context, SplashActivity.class);
-        starter.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        return starter;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +20,7 @@ public class SplashActivity extends BaseActivity {
         }
 
         SystemUtil.setFullscreenWithSystemUi(getWindow().getDecorView());
+
         setContentView(R.layout.splash_activity);
     }
 

@@ -1,12 +1,8 @@
 <resources>
     <style name="MainAppTheme"
         parent="AppTheme"></style>
-    <style name="MainAppTheme.Boot">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@drawable/boot</item>
-    </style>
     <style name="MainAppTheme.Splash">
-        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash_boot_bg</item>
     </style>
 </resources>
